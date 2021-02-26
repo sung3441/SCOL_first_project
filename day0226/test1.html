@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin:0px;
+        }
+    /* 문서의 ID를 선택자로 사용할 경우 #을 붙인다  */
+        #navi{
+            background-color: peachpuff;
+            padding-left:100px; /* 왼쪽 박스 경계로부터 x축 방향으로 100px 증가 */
+        }
+        #content{
+            background-color: rosybrown;
+            height:600px;
+            text-align: center; /* 박스 내에 있는 컨텐츠 가운데로 정렬 */
+        }
+    </style>
+</head>
+<body>
+    <!-- 포지션의 대상이 되려면 태그로 마크업이 되어 있어야 한다 (padding과 다름)-->
+    <!-- ex) <span>나는 자연인이다</span> -->
+    <!-- div란 '분할'이라는 의미로 하나의 문서 내의 구역을 설정할 때 사용 -->
+    <div id="navi">메뉴 나올 곳</div>
+    <div id="content">사이트 내용</div>
+</body>
+</html>

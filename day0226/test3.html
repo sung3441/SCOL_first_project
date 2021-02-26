@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>복합구조의 레이아웃</title>
+    <style>
+
+        #navi{
+            background-color: yellow;
+            width:700px;
+            height:100px;
+        }
+
+        #side{
+            background-color: green;
+            width:100px;
+            height:550px;
+            float:left; /*물체를 공중으로 부양하자!!, 부양 방향은 좌측 방향으로 */
+        }
+
+        #content{
+            background-color: blue;
+            width:600px;
+            height:550px;
+            float: left;
+        }
+
+        #wrapper{
+            width:700px;
+            height:550px;
+            margin:auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="navi">노란색 박스</div>
+        <div id="side">사이드</div>
+        <div id="content">컨텐츠 영역</div>
+    </div>
+</body>
+</html>

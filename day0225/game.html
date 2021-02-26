@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    /* 누구를(selector) 어떻게{} */
+    body{
+        background-image: url(../images/bg1.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    /* html 문서 내에 있는 모든 컨텐츠는 반드시
+    마크업해야 원하는 디자인 효과를 낼 수 있다
+    주인공의 위치를 원하는 곳에 두려면 html상에서는 원래 불가능하다
+    따라서 css를 이용하여 이 한계를 극복할 수 있다
+    스타일 시트의 위치 지정 속성을 배워보자 */
+
+    .plane{
+        width:150px;
+        position: absolute; /* 절대 위치 */
+        left:350px; /* x축의 값을 350 옆으로 */
+        top:200px; /* y축의 값을 200 내린다 */
+    }
+</style>
+</head>
+<body>
+    <img src="../images/plane.png" class="plane">
+</body>
+</html>

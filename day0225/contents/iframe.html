@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iframe</title>
+<style>
+    /* 누구에 대해 무엇을? */
+    .f1{
+        position:absolute;
+        left:200px;
+        top:300px;
+        width:300px;
+        height:350px;
+    }
+
+    .f2{
+        position:absolute;
+        left:500px;
+        top:300px;
+        width:300px;
+        height:350px;
+    }
+</style>
+</head>
+<body>
+    <!-- 
+        기존 프레임의 단점 ?
+        1) 화면을 무조건 분할해 버린다 (위, 아래 혹은 좌우로)
+        2) 크기를 지정할 수 없다
+        3) 분할을 할 경우 컨텐츠를 보여줄 공간이 좁아진다
+            (예: 네이버의 경우 한 페이지로 처리)
+
+            iframe 이란?
+            - 크기와 위치를 자유롭게 설정할 수 있는 개선된 프레임
+     -->
+    
+    <iframe src="http://nate.com" class="f1"></iframe>
+    <iframe src="http://nate.com" class="f2"></iframe>
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>회원가입</title>
+<style>
+    /* 이 영역은 스타일 시트의 영역이다.. 즉 html 태그 영역이 아니다
+    따라서 스타일 시트 문법만 작성할 수 있다
+    스타일 태그를 이용하면, 문서 내에 스타일 시트를 적용할 대상을
+    일괄적으로 지정 및 적용 할 수 있다
+    스타일 시트의 문법 구조 -> '누구를 {어떻게 ~~}'
+    누구를 지칭할 때 사용하는 CSS의 요소를 가리켜 선택자(selector)라고 한다
+    */
+    td{
+        font-size:11px;
+        color:red;
+    }
+    select{
+        color:blue;
+    }
+    input{
+        background-color:yellow;
+        border:2px dotted green;
+    }
+    /* 일괄적용 + 원하는 곳에만 적용시킬 수 있는 나만의 스타일 정의
+    이러한 스타일 시트 블럭을 가리켜 클래스라 한다 */
+    .title_style{
+        text-align:center;
+    }
+    textarea{
+        background-color: pink;
+        background-image: url(https://tukiem.com/wp-content/uploads/2017/09/PT_hero_42_153645159-1024x494.jpg);
+        background-repeat: no-repeat;
+        width:600px;
+        height:300px;
+        background-size: 600px 300px;
+        padding:0px;
+        margin:0px;
+   }
+</style>
+</head>
+<body>
+    <table border="5px" align="center" width="700px">
+        <tr>
+            <td colspan="2" align="center" style="font-size:20px;color:cornflowerblue;background-color:yellow;font-weight: bold;">회원가입</td>
+        </tr>
+        <tr>
+            <td class="title_style">ID</td>
+            <td><input type="text" placeholder="Your ID"></td>
+        </tr>
+        <tr>
+            <td class="title_style">Password</td>
+            <td><input type="password" placeholder="Your Password"></td>
+        </tr>
+        <tr>
+            <td class="title_style">Name</td>
+            <td><input type="text" placeholder="Your Name"></td>
+        </tr>
+        <tr>
+            <td class="title_style">Phone</td>
+            <td>
+                <input type="text" placeholder="국번"> -
+                <input type="text" placeholder="앞자리"> -
+                <input type="text" placeholder="뒷자리">
+            </td>
+        </tr>
+        <tr>
+            <td class="title_style">E-mail</td>
+            <td>
+                <input type="text" placeholder="Mail ID">
+                <select>
+                    <option value="">gmail.com</option>
+                    <option value="">nate.com</option>
+                    <option value="">daum.net</option>
+                    <option value="">naver.com</option>
+                    <option value="">직접 입력</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="title_style">skill</td>
+            <td>
+                <input type="checkbox"> node.js
+                <input type="checkbox"> oracle
+                <input type="checkbox"> mysql
+                <input type="checkbox"> javascript
+                <input type="checkbox"> css
+                <input type="checkbox"> react
+            </td>
+        </tr>
+        <tr>
+            <td class="title_style">E-mail receive</td>
+            <td>
+                <input type="radio" name="Mail">Yes
+                <input type="radio" name="Mail">No
+            </td>
+        </tr>
+        <tr>
+            <td class="title_style">introduction</td>
+            <td>
+                <textarea cols="60" rows="5"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button>가입</button>
+            </td>
+        </tr>
+    </table>
+
+    <hr>
+    <!-- 목록을 표현해보자!! 
+         순서있는 목록 : ordered list (ol)
+         순서없는 목록 : unorderd list (ul)
+    -->
+
+    <ol>
+       <li>파인애플</li> 
+       <li>오렌지</li> 
+       <li>배</li> 
+       <li>사과</li> 
+    </ol>
+
+    <ul>
+        <li>파인애플</li> 
+        <li>오렌지</li> 
+        <li>배</li> 
+        <li>사과</li> 
+     </ul>
+
+<!-- h 제목 태그는 1~6단계까지 지원됨
+    태그를 보여지는 대로 쓰면 스크린 리더기 등에 의해 해석에 문제가 생긴다
+    따라서 태그 사용시 디자인 결과로 판단하지 말고 각 태그가 가진
+    고유의 의미를 이용해야 한다 (시멘틱 = sementic)
+    즉 각 태그에는 이미 의미가 부여되어 있고 그 의미를 살려 써야 한다
+-->
+
+<h1>더미 텍스트</h1>
+<h2>더미 텍스트</h2>
+<h3>더미 텍스트</h3>
+<h4>더미 텍스트</h4>
+<h5>더미 텍스트</h5>
+<h6>더미 텍스트</h6>
+
+<img src="https://cdn1.iconfinder.com/data/icons/scenarium-vol-12/128/012_032-512.png">
+
+<p>
+<span style="font-size:45px">Lorem</span> <b>ipsum</b> dolor sit amet, consectetuer adipiscing elit.
+</p>
+<p>
+Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+</p>
+<p>
+Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
+Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget,
+arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
+Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus.
+Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
+porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante,
+dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet.
+Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue.
+Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus,
+tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum.
+Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem.
+Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus.
+Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo.
+Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
+</p>
+</body>
+</html>
