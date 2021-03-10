@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #hero{
+            position: absolute;
+            left: 0px;
+            top:150px;
+        }
+    </style>
+    <script>
+        var x = 0;
+        var step=50; // 증가 or 감소를 결정하는 변수
+        var flag=true;
+        var st;
+
+        function move(){
+            step = (flag)? 50:-50;
+            x = x + step;
+            document.getElementById("hero").style.left=x+"px";
+            // 개발자는 flag만 만지면 공의 방향이 바뀔 수 있다
+            document.querySelector("h1").innerText="x : "+x;
+            flag = (x>=500 || x <=0)? !flag : flag;
+
+            // flag= (x==500)? false:((x==0)? true:flag);
+
+        }
+        function auto(){
+            // 자동버튼을 비활성화 시키려면?
+            
+            // var a = 10 <-- 지역변수
+            st = setInterval("move()", 1); 
+        }
+        function stop(){
+            clearInterval(st);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="move()">움직이기</button>
+    <button onclick="auto()">자동</button>
+    <button onclick="stop()">멈춤</button>
+    <h1>x : 0</h1>
+    <img id="hero" src="../images/pure-vanilla-cookie.png" alt="" width=150px>
+</body>
+</html>

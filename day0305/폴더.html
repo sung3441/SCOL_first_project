@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+
+        var status;  // 상태를 담게 될 변수
+        var flag=true; // 삼항연산자의 판단 대상이 될 논리값
+                                // 아래 삼항연산자에서 이 값이 true이면 on, false이면 off를 반환
+        function openClose(){
+
+            // 문서의 folder 요소의 src를 변경하되, 변경할 이미지가 2가지 경우이므로
+            // 어떤한 이미지가 나올지는 삼항연산자에게 맡기자
+            // true 일 경우 on, false 일 경우 off
+            status = (flag)? "on":"off";
+            document.querySelector("#folder").src="../images/folder_"+status+".webp";
+            console.log("status=", status, "flag=", flag);
+
+            flag=!flag;
+
+        }
+    </script>
+</head>
+<body>
+    <img id="folder" src="../images/folder_off.webp" onclick="openClose()">
+</body>
+</html>

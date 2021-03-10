@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+        #wrapper{
+            width: 100%;
+            height: 600px;
+            background:yellow;
+            position: relative;
+        }
+    </style>
+    <script>
+
+        var img
+        // 마우스를 움직이는 동안 마우스의 좌표를 구해본다
+        function getPos(){
+            console.log("마우스가 움직이네요");
+
+            // 마우스 좌표 구하기
+            var x = event.clientX;  // 마우스의 x좌표
+            var y = event.clientY;  // 마우스의 y좌표
+            document.getElementById('x-pos').innerText=x;
+            document.getElementById('y-pos').innerText=y;
+
+            // 공의 좌표를 마우스와 일치시켜보자
+            img.style.left=(x-50)+"px";  // 디폴트 위치보다 이미지 절반을 좌측으로 (음수)
+            img.style.top=(y-50)+"px";  // 디폴트 위치보다 이미지 절반을 위쪽으로 (음수)
+
+        }
+
+        // 프로그램이 가동되자마자 하고싶은 작업
+        function init(){
+            // 이미지를 동적으로 생성하여 wrapper에 부착하자
+            img = document.createElement("img");
+            img.src="../images/ball.png";
+            img.style.position="absolute";
+            img.style.left=100+"px";
+            img.style.top=150+"px";
+            img.style.width=100+"px";
+            img.style.height=100+"px";
+
+            var wrapper = document.getElementById("wrapper");
+            wrapper.appendChild(img);
+
+        }
+
+    </script>
+</head>
+<body onMouseMove="getPos()" onLoad="init()">
+    <!-- mousemove 이벤트는 물체 위에서만 인식된다
+    따라서 크기만한 div를 화면전체에 덮어 구현해보자 -->
+    <div id="wrapper">
+        <span id="x-pos">0</span>px
+        <span id="y-pos">0</span>px
+    </div>
+        
+</body>
+</html>

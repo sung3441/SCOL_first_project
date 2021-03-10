@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 600px;
+            margin: auto;
+        }
+    </style>
+    <script>
+        // onLoad를 쓸 수도 있으나 자존심상하니 프로그래밍적으로 !
+        window.addEventListener("load", function(){
+            // 이 시점은 body 태그까지 모두 읽혀진 시점으로, 각 요소에 마음대로 접근 가능
+            var bt = document.querySelector("button");
+            bt.style.background="blue";
+
+            // 버튼을 클릭하면...
+            bt.addEventListener("click", function(){
+                send();
+            });
+        });
+
+        // 웹서버에 가입양식의 내용을 네트웍을 통해 전송
+        // 전송대상이 되는 컴포넌트(input, select..)들을 전송 양식으로 묶어야 한다
+        // 이 때 사용되는 태그가 바로 form 이다.
+        function send(){
+            // 유효성 체크 (id 여부 등)
+            var user_id = document.getElementById("user-id");
+            var pass = document.getElementById("pass");
+            var pass2 = document.getElementById("pass2");
+            var phone = document.getElementById("phone");
+            var number = document.getElementById("number");
+
+            console.log("당신이 입력한 ID는?", user_id.value);
+            if(user_id.value==""){
+                alert("아이디를 입력하세요 !");
+                //커서 올리기
+                user_id.focus();  // 커서를 올려놓는 메서드 호출
+            }else if(pass.value==""){  // 패스워드를 입력안했다면...
+                alert("비밀번호를 입력하세요 !");
+                pass.focus();
+            }else if(pass.value!=pass2.value){  // 입력한 패스워드가 다를 때 경고문
+                alert("비밀번호가 다릅니다 !");
+                pass2.focus();
+            }else if(phone.value==""){
+                alert("전화번호를 입력하세요 !");
+                phone.focus();
+            }else if(number.value==""){
+                alert("전화번호를 입력하세요 !");
+                number.focus();
+                // ! 부정연산자는 false의 값을 가지기 때문에 비교연산자로 처리하거나
+                // 부정연산자를 맨 앞에 붙여 처리해도 된다
+            }else if(!document.getElementsByName("agree")[0].checked){
+                alert("대......박 인성보소");
+            }else{
+            var form1 = document.getElementById("form1");
+            // 입력 양식인 form태그에는 전송 대상 서버에 어떤 방식으로 전송할지 지정할 수 있다
+            form1.action="http://daum.net";  // 전송대상 url
+            form1.submit();  // 네트워크를 통해 입력데이터가 전송
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <form id="form1">
+            <table width="100%" border="1px">
+                <tr>
+                    <td><input type="text" placeholder="Your ID.." id="user-id"></td>
+                </tr>
+                    <td><input type="password" placeholder="Your password.." id="pass"></td>
+                </tr>
+                <tr>
+                    <td><input type="password" placeholder="Confirm Password.." id="pass2"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="" id="">
+                            <option value="">010</option>
+                            <option value="">011</option>
+                            <option value="">017</option>
+                            <option value="">019</option>
+                        </select> -
+                        <input type="text" placeholder="앞자리" id="phone"> -
+                        <input type="text" placeholder="뒷자리" id="number">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="radio" name="agree" id="" value="yes">동의
+                        <input type="radio" name="agree" id="" checked value="no">동의안함
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!-- html5 버튼은 디폴트가 submit 속성을 보유 -->
+                        <button type="button">가입</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

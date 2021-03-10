@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            margin: auto;
+            width: 900px;
+            height: 600px;
+            background-color: cornflowerblue;
+        }
+        .left-side{
+            width: 180px;
+            height: 100%;
+            background-color: aquamarine;
+            float: left;
+        }
+        #content{
+            width: 720px;
+            height: 100%;
+            background-color: aqua;
+            float: left;
+            overflow: scroll;
+            /* overflow: hidden;  -->  부모 영역을 벗어나는 컨텐츠는 과감히 가려라 */
+        }
+        img{
+            width: 130px;
+            height: 190px;
+        }
+    </style>
+    <script>
+        /*
+        동적 == runtime : 실행 타임에 컨텐츠를 변화시킬 수 있는 방법 <--> 정적
+        즉 프로그래밍 적으로 컨텐츠를 변화시키는 것을 의미
+        */
+        var count = 0; // 몇 번째 클릭인지 알기 위한 카운터 변수
+
+        function showProduct(){
+            count++;
+            console.log("count 값은 ", count);
+            /*
+            함수 호출 시 문서 내의 content 요소 안에
+            img 태그를 동적으로 생성하여 자식 요소로 두기
+            */
+            // 기존에 없던 태그를 프로그래밍 적으로 생성
+            var img = document.createElement("img"); // 태그 생성
+            img.src="../images/shopping/1.jpg."
+
+            document.querySelector("#content").appendChild(img);
+
+            // 줄바꿈을 위해 <br> 동적으로 만들기
+           var br = document.createElement("br");
+           
+            // 카운터 값이 x인 경우에만 appendChild() 하자
+
+            // 문서 안의 txt라는 요소의 값을 구하자!!
+            // 단, 코드가 길면 변수로 받자
+            var n = document.querySelector("#txt").value;
+
+           ((count%n) ==0)? document.querySelector("#content").appendChild(br) : 0 ;
+
+        }
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="left-side">
+            <input type="text" value="5" id="txt">
+            <button onclick="showProduct()">추가</button>
+        </div>    
+            <div id="content"></div>
+    </div>
+</body>
+</html>

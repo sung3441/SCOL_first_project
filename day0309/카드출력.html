@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>나는 개발자야</title>
+<script>
+    
+    var div;  // 모든 함수에서 접근 가능하도록 전역 함수로
+    var n = 0; // 변수 값이 숫자인 경우는 반드시 초기값을 할당해야 한다
+    window.addEventListener("load", function(){
+        init();
+    });
+
+    // 디자인 초기화 (버튼, wrapper 등)
+    function init(){
+        var bt = document.createElement("button");
+        bt.innerText="카드생성";
+        bt.addEventListener("click", function(){ // 버튼을 클릭하면
+            createCard();
+        });
+
+        var bt2 = document.createElement("button");
+        bt2.innerText="자동생성";
+        bt2.addEventListener("click", function(){
+            setInterval("createCard()", 100);
+        })
+
+        div = document.createElement("div");
+        div.style.width=800+"px";
+        div.style.height=600+"px";
+        div.style.background="yellow";
+        div.style.margin="auto";
+        div.style.overflow="hidden";
+
+        // 생성된 버튼을 body에 부착
+        document.body.appendChild(bt);
+        document.body.appendChild(bt2);
+        document.body.appendChild(div);
+        
+    }
+    // 카드이미지를 동적으로 실행타임에 생성하여 div에 부착하자
+    function createCard(){
+        var img = document.createElement("img");
+        n=n%5;  // 순환구조에 사용 가능
+        n++;
+        img.src="../images/card/"+n+".jpg";
+        img.style.width=100+"px";
+        img.style.height=150+"px";
+         
+        // 이미지가 떠있기 때문에 div에 자식요소로 부착해야 한다
+         div.appendChild(img);
+        
+         // n값이 5를 넘어서면 0으로 돌려라
+        /*if(n>=5){
+            n=0;
+        } */  
+        // (n>=5)? n=0 : 0;
+        // ((n%5)==0)? n=0 : 0;
+    
+    }
+</script>
+</head>
+<body>
+
+</body>
+</html>

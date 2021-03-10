@@ -1,0 +1,15 @@
+<script>
+
+    // 반복문은 처음과 끝값을 지정해야 한다
+
+    var n = parseInt(prompt("원하는 수를 입력하세요.")); // 가운데 수 역할
+    var first=n-1; // 시작값
+    //pasreInt() 문자열을 정수로 변환
+    //prompt()에 입력된 모든 데이터는 문자열 취급하므로
+    //반드시 정수화 시켜주는 parseInt() 처리를 하면 좋다
+    var last=n+1; // 끝값
+
+    for(var i=first;i<=last;i++){
+        document.write(i+"&nbsp;&nbsp");
+    }
+</script>

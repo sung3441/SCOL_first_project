@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        //이벤트 핸들러를 자바스크립트에서도 구현할 수 있다.
+        // 익명의 함수 중, 시스템에 의해 호출당하는 함수를 callback함수라 한다.
+        window.addEventListener("load", function(){
+            init();
+        });
+
+        function init(){
+            // alert("문서 로드했어?!;")
+            var result = prompt("원하는 배경색을 선택하세요\n1 무지개순서 1 2 3 4 5 6 7")
+            
+            // 유저가 선택한 1~7 사이의 값을 하나씩 조건을 따져보고 알맞는 색상 문자열로 변환하자
+            // 1 : red, 2 : orange, 3 : yellow, 4 : green, 5 : blue, 6 : navy, 7 : purple
+            var color;
+            if(result==1){
+                color="red";
+            }else if(result==2){
+                color="orange";
+            }else if(result==3){
+                color="yellow";
+            }else if(result==4){
+                color="green";
+            }else if(result==5){
+                color="blue";
+            }else if(result==6){
+                color="navy";
+            }else if(result==7){
+                color="purple";
+            }else{
+                alert("하지 마 !!");
+            }
+            // document.querySelector("body");
+            document.body.style.background=color;
+        }
+    </script>
+</head>
+<body id="">
+    
+</body>
+</html>

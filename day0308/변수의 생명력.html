@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        /*
+        변수의 생명력(유지 시간)
+        - 전역변수 : 프로그램이 종료될 때까지 메모리상 존재
+        - 지역변수 : {} 지역화 영역이 종료될 때까지 메모리상 존재
+        */
+        var k = 5; // <-- 전역변수
+        function test1(){
+            
+        }
+        function test2(){
+            var x = "사과"; // <-- 지역변수
+            alert(k);
+        }
+        test1();
+        test2();
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

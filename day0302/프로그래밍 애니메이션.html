@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0px;
+        }
+        #wrapper{
+            width: 100%; /* body에 도달할 때까지 */
+            height: 700px;
+            background: url(../images/1624.jpg);
+            background-repeat: repeat-x; /* x축으로만 반복 */
+            background-size: 100% 600px;
+            background-position: 0px 0px;
+        }
+        #hero{
+            position: absolute; /* 부모 태그를 기준으로 한 위치 속성 */
+            left: 50px;
+            top: 150px;
+            width: 120px;
+            height: 85px;
+        }
+    </style>
+    <script>
+        /* 프로그램 영역
+        아래 코드의 무조건 실행을 막기위해 블럭을 지정하고 코드 영역에 이름을 붙여보자
+        아래 코드 블럭의 이름은 moveBg이고, 개발자가 이름을 호출하기 전까지는
+        절대 실행되지 않는다
+        */
+
+    var x=0; // 자바스크립트에서 변수 선언시 var 키워드를 사용 (variable)
+
+    function moveBg(){
+        x = x-1;
+        console.log("변수 x값은", x);
+
+        //alert('나 불렀어?');
+        //문서 내의 wrapper라 불리는 요소의 배경을 x축의 음수방향으로 이동시키자
+        document.querySelector("#wrapper").style.backgroundPosition= x+"px 0px";
+    }
+
+    // 우측으로 이동함수 정의
+    var a = 50;
+    function moveRight(){
+        a = a+5;
+        // 문서 내의 hero라는 요소의 style 시트 중 left 값을 증가시키자 !
+        document.querySelector("#hero").style.left=a+"px";
+    }
+
+    function moveLeft(){
+        a = a-5;
+        document.querySelector("#hero").style.left=a+"px";
+    }
+
+    var b = 150;
+    function moveUp(){
+        b = b-5; // 기존의 y값에 -5 한 값을 최종적으로 y에 대입
+
+        // 문서내에 hero라는 요소의 스타일 중 top값을 감소시키자
+        document.querySelector("#hero").style.top=b+"px"
+    }
+
+    function moveDown(){
+        b = b+5;
+        document.querySelector("#hero").style.top=b+"px"
+    }
+
+     function gameLoop(){
+         setInterval("moveBg()", 10);
+     }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <img src="../images/pure-vanilla-cookie.png" id="hero">
+    </div>
+    <!-- 이벤트 핸들러란, 해당 이벤트가 발생했을 때 어떤
+    자바스크립트 코드를 작성할지 결정할 수 있는 핸들러 -->
+    <button onclick="moveBg();">배경 수동으로 움직이기</button>
+    <button onclick="gameLoop();">auto</button>
+    <button onclick="moveLeft()">좌</button>
+    <button onclick="moveRight()">우</button>
+    <button onclick="moveUp()">위</button>
+    <button onclick="moveDown()">아래</button>
+</body>
+</html>

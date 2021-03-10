@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* css 문법 형식은 '누구를 어떻게' 할 것이냐의 형식
+        이 때 누구자리에 오는 문법 요소를 선택자(selector)라 한다 */
+        .wrapper{
+            background-color: red;
+            width: 600px;
+            height: 600px;
+            margin: auto; /* 웹 너비에서 600을 빼고 난 나머지를 2분할한 중간*/
+        }
+        #top-div{
+            width: 100%; /* 부모 컨테이너의 너비까지 확장 */
+            height: 100px;
+            background-color: yellow;
+        }
+        #side-div{
+            background-color: blue;
+            width: 100px;
+            height: 400px;
+            float: left;
+        }
+        #content-div{
+            background-color: greenyellow;
+            width: 500px;
+            height: 400px;
+            float: left;
+        }
+        #footer-div{
+            /* 컴퓨터에서 색상을 표현할 때 빛의 3원색으로 표현한다
+                Red(256) Green(256) Blue(256) 
+            */
+            background-color:#cccccc; /* 16진수 값 */
+            width: 100%;
+            height: 100px;
+            clear: both; /* float된 공간을 메꾸지 않는다 */
+        }
+        .top-navi{
+            /* 자식들이 float 처리 된 경우 부모는 반드시 overflow:hidden 속성을 지정한다 */
+            overflow: hidden;
+        }
+
+        /* top-navi 클래스가 적용된 안쪽 자식 요소들 중 a에 대해.. */
+        .top-navi a{
+            text-decoration: none; /* 링크 밑줄 없애기 */
+            font-size: 16px;
+            padding-left: 16px;
+            padding-right: 16px;
+            border: 1px solid #000000;
+            float:left;
+        }
+        #cs{
+            float:right;
+        }
+
+        /*
+        a 태그에 마우스 올려놓았을 때 백그라운드 색 주기
+        이 때 : 뒤에 오는 hover는 태그가 아닌 가칭의 유사태그(pseudo)라 한다
+        */
+        .top-navi a:hover{
+            background-color: #4caf50;
+        }
+    </style>
+</head>
+<body>
+    <!-- 모든 div를 감쌀 최상위 부모 컨테이너 -->
+    <div class="wrapper">
+        <div id="top-div">
+            <div class="top-navi">
+                <a href="#">Home</a>
+                <a href="#">Shopping</a>
+                <a href="#">MyPage</a>
+                <div id="cs">
+                    <a href="#">CS</a>
+                </div>
+            </div>
+        </div>
+        <div id="side-div"></div>
+        <div id="content-div"></div>
+        <div id="footer-div"></div>
+    </div>
+    
+    
+</body>
+</html>

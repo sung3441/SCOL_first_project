@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>판단결과 나올 곳</h1>
+
+    <!-- 
+    함수를 사용하지 않고 JS 코드를 수행할 경우 스크립트 삽입 위치는
+    디자인이 다 읽혀진 완료 시점인 닫는 body 직전에 넣는 게 대세 !
+     -->
+    <script>
+
+        var msg;  // 홀수, 짝수 문자열을 담을 변수
+
+        var result=prompt("원하시는 수를 입력하세요.");
+        //alert("당신이 입력한 값은 "+ result);
+        
+        //isNaN(); // is Not a Number : 즉, 숫자가 아닌 것을 true 인식
+
+        var ans=(isNaN(result))? "새꺄" : "숫장";
+        alert(ans);
+
+        msg=(result%2==0)? "짝수":"홀수" ;
+        document.querySelector("h1").innerText=msg+"입니다";
+    </script>
+</body>
+</html>

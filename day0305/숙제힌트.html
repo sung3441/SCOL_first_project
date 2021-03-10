@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #hero{
+            position: absolute;  /* 부모인 body를 기준으로 위치설정 */
+            left: 0px;
+            top: 200px;
+        }
+    </style>
+    <script>
+        var x = 0;  // x좌표 정하는 변수
+        var y = 0;
+        var back;
+        var flag=true;
+        
+        // hero 요소의 left값 변경시키기 + 좌표 정보 갱신
+        function move(){
+            x += 50;
+            
+            document.querySelector("h1").innerText="x : "+x;
+
+            // 증가시킨 변수를 우주선의 좌표에 써먹어보자 !
+            document.querySelector("#hero").style.left=x+"px";
+
+            // 500px에 도달했을 때 우주선의 좌표가 감소되어야 한다
+            // 또한 다시 0에 도달하면, 우주선의 좌표는 증가되어야 한다
+            // 힌트 : 삼항연산자 + % 를 이용하자 !
+           
+            back = (flag)? "" : ;
+            
+
+            flag=!flag;
+           
+            
+        }
+    </script>
+</head>
+<body>
+    <button onclick="move()">수동으로 이동</button>
+    <h1>x : 0</h1>
+    <img id="hero" src="../images/pure-vanilla-cookie.png" width="150px">
+</body>
+</html>

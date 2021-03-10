@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var n = 1;
+        // 애니메이션 효과를 내기 위해 이미지를 교체하자
+        function next(){
+            n = n + 1;
+        // 문서 내 이미지의 src 값을 변하게 하자
+        document.querySelector("img").src="../images/hero/hero/image"+n+".png"
+        }
+    </script>
+</head>
+<body>
+    <button onclick="next()">애니메이션 동작</button>
+    <img src="../images/hero/hero/image1.png" alt="">
+</body>
+</html>

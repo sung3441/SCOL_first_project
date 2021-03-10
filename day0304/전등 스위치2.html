@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #wrapper{
+            background: url(../images/room.jpg);
+            width: 900px;
+            height: 622px;
+            background-size: 900px 622px;
+            margin: auto;
+            position: relative;
+        }
+        #wrapper img{
+            width: 35px;
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+        #surface{
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0.8;
+        }
+    </style>
+    <script>
+        var op = 0.8;
+        var swImg = "switch_on.png";
+        var flag=true; // true 혹은 false 값을 대입할 변수 선언
+                             // false = 불 끄는 효과, true = 불 켜는 효과
+
+        // 스위치를 켜고 끄는 함수
+        function turn(){
+            // 투명막을 제어 : surface라 불리는 요소의 opacity 변경
+            
+            op = (flag)? 0:0.8;
+            document.querySelector("#surface").style.opacity=op;
+            
+            // 스위치 이미지 제어
+            // 이미지명은 결정되지 않은 변수로
+
+            swIng = (flag)? "switch_on.png": "switch_off.png";
+            document.querySelector("img").src="../images/"+swImg;
+
+            flag=!flag;
+
+        }
+    </script>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="surface"></div>
+            <img src="../images/switch_off.png" alt="" onclick="turn()">
+        </div>
+    </div>
+</body>
+</html>

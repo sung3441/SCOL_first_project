@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            margin: auto;
+            position: relative;
+            width: 1200px;
+            height: 650px;
+            background-color: skyblue;
+        }
+        #card{
+            float: left;
+            width: 1200px;
+            height: 90%;
+            background-color: aquamarine;
+        }
+        img{
+            width: 120px;
+            height: 150px;
+        }
+    </style>
+    <script>
+         var count = 0; // 몇 번째 클릭인지 알기 위한 카운터 변수
+
+function showProduct(){
+    count++;
+    console.log("count 값은 ", count);
+    /*
+    함수 호출 시 문서 내의 content 요소 안에
+    img 태그를 동적으로 생성하여 자식 요소로 두기
+    */
+    // 기존에 없던 태그를 프로그래밍 적으로 생성
+    var img = document.createElement("img"); // 태그 생성
+    if((count%1)==1){
+        img.src="../images/card/1.jpg."
+    }else if((count%2)==1){
+        img.src="../images/card/2.jpg."
+    }else if((count%3)==1){
+        img.src="../images/card/3.jpg."
+    }else if((count%4)==1){
+        img.src="../images/card/4.jpg."
+    }else if((count%5)==1){
+        img.src="../images/card/5.jfif."
+    }
+    document.querySelector("#content").appendChild(img);
+
+    // 줄바꿈을 위해 <br> 동적으로 만들기
+   var br = document.createElement("br");
+   
+    // 카운터 값이 x인 경우에만 appendChild() 하자
+
+    // 문서 안의 txt라는 요소의 값을 구하자!!
+    // 단, 코드가 길면 변수로 받자
+    var n = document.querySelector("#txt").value;
+
+   ((count%n) ==0)? document.querySelector("#content").appendChild(br) : 0 ;
+
+}
+
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="left-side">
+            <input type="text" value="5" id="txt">
+            <button onclick="showProduct()">추가</button>
+        </div>    
+            <div id="content"></div>
+    </div>
+</body>
+</html>
