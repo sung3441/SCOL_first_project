@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    #pica{
+        width: 80px;
+    }
+</style>
+<script>
+    // 감속도 처리를 해서 목표점에 도달하자 (많은 분야에 이용된다)
+    var targetX=500; // 목표지점의 x좌표
+    var a = 0.1; // 비율계수
+    var pica;
+
+    //문서가 로드되면 피츄의 스타일 포지션 값을 JS에서 지정
+    window.addEventListener("load", function(){
+        pica = document.getElementById("pica");
+        pica.style.position="absolute";
+        pica.style.top=200+"px";
+        pica.style.left=0+"px";
+    });
+
+    function move(){
+        
+        // pica.style.left=targetX+"px";  <-- 순간이동
+        // 공식 : 물체위치 = 현재위치 + a*(목표지점-현재위치)
+        pica.style.left = parseInt(pica.style.left) + a * (targetX - parseInt(pica.style.left))+"px";
+        setTimeout("move()", 10);
+    }
+</script>
+</head>
+<body>
+    <button onclick="move()">무브</button>
+    <img src="../images/pica.png" id="pica">
+</body>
+</html>

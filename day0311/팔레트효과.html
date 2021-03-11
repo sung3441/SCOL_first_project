@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .wrapper{
+            width: 700px;
+            height: 600px;
+            background-color: antiquewhite;
+            margin: auto;
+            overflow: hidden; /* float된 자식이 있기 때문에 */
+        }
+        .box{
+            width: 100px;
+            height: 100px;
+            float: left;
+        }
+        #content{
+            width: 100%;
+            height: 500px;
+            clear: both;
+            background-color: khaki;
+        }
+    </style>
+    <script>
+        
+        var content;
+        // 함수 호출자가 함수내부에서 사용할 변수값을 결정지을 수 있는 함수
+        // == 매개변수가 있는 함수
+        function setBg(color){
+            // 문서 내에 content div에 배경색을 적용하되, 선택한 섬네일과 같은 색으로 만들자
+            content = document.getElementById("content");
+            content.style.background=color;
+        }
+        // 배경색을 넘겨받지 말고, 배경색이 적용된 div를 
+        function sukho(obj){
+            var div = document.getElementById(obj); // box2
+            content = document.getElementById("content");
+            content.style.background=div.style.background;
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="box1" class="box" style="background:red" onclick="setBg(this.style.background)"></div>
+        <div id="box2" class="box" style="background:orange" onclick="sukho('box2')"></div>
+        <div id="box3" class="box" style="background:yellow" onclick="setBg('yellow')"></div>
+        <div id="box4" class="box" style="background:green" onclick="setBg('green')"></div>
+        <div id="box5" class="box" style="background:blue" onclick="setBg('blue')"></div>
+        <div id="box6" class="box" style="background:navy" onclick="setBg('navy')"></div>
+        <div id="box7" class="box" style="background:purple" onclick="setBg('purple')"></div>
+        <div id="content"></div>
+    </div>
+</body>
+</html>

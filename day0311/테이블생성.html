@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+    window.addEventListener("load", function(){
+        createTable();
+    });
+    function createTable(){
+        // 문서 내에 없던 태그를 create 처리하여 생성하는 방법으로 테이블을 구성하자
+        
+        // 몇 층, 몇 호수로 생성할지 프롬프트를 이용하여 입력받자
+
+        var f = parseInt(prompt("원하는 층수를 입력하세요"));
+        var h = parseInt(prompt("원하는 호수를 입력하세요"));
+
+        // 이 건축물의 콘크리트 두께도 입력받아 처리해보자
+        var r = parseInt(prompt("콘크리트의 두께는?"));
+        
+        var table = document.createElement("table");  // ==<table></table>
+        table.style.width=300+"px";
+        table.border=r+"px";
+
+        for(var a=f; 1<=a; a--){
+            var tr = document.createElement("tr");  // ==<tr></tr>
+            for(var i=1; i<=h; i++){
+                var td = document.createElement("td");  // ==<td></td>
+                td.innerText=a+"0"+i+"호";
+                tr.appendChild(td);  // tr에 td를 부착
+            }
+            table.appendChild(tr);  // tr을 table에 부착
+        }
+        document.body.appendChild(table);  // body에 부착
+    }
+</script>
+</head>
+<body>
+    
+</body>
+</html>
