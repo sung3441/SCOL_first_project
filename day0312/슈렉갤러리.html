@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    .wrapper{
+        width: 500px;
+        height: 400px;
+        background-color: yellow;
+        margin: auto;
+    }
+    /* 사진이 나올 액자 영역 */
+    #photo-frame{
+        width: 500px;
+        height: 340px;
+        background-color: blue;
+        overflow: hidden;
+        position: relative;
+    }
+    #container{
+        width: 3500px;
+        height: 340px;
+    }
+    #container img{
+        float: left;
+    }
+    /* 이미지 페이지 네비게이션 */
+    #navi{
+        text-align: center;
+        font-size: 30px;
+    }
+    #navi a{
+        text-decoration: none;
+    }
+    /* pseudo : 수도 -> 가상태그(태그 상태도 선택자가 될 수 있다 */
+    #navi a:hover{
+        color: rosybrown;
+    }
+</style>
+<script>
+    // 포지션 제어를 위해 문서 로드와 동시에 container에 absolute 적용
+
+    var con; // 모든 한수에서 접근하기 위해
+    var targetX=0; // 컨테이너의 x좌표를 담을 변수
+    var a = 0.1;
+
+    function init(){
+        con = document.getElementById("container");
+        con.style.position="absolute"; //  부모를 기준으로 한 위치속성
+
+        con.style.top=0+"px";
+        con.style.left=0+"px";  // 초기화
+
+        setInterval("move()", 10);
+    }
+
+    // container 이동시키기
+    function move(){
+        // con.style.left=targetX+"px";
+        // 부드럽게 == 감속도 조절
+        // 나의 위치 = 현재 나의 위치 + 비율 * (목표지점 - 현재 나의 위치)
+        con.style.left=parseFloat(con.style.left)+a*(targetX-parseFloat(con.style.left))+"px";
+        // setTimeout("move(x)", 10); // 클릭한 만큼 생성된다
+    }
+
+    function setTarget(x){
+        targetX = x;  // 새로운 목표지점 생성
+    }
+    window.addEventListener("load", function(){
+        init();
+    });
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="photo-frame">
+            <div id="container">
+                <img src="../images/shurek/img0.jpg">
+                <img src="../images/shurek/img1.jpg">
+                <img src="../images/shurek/img2.jpg">
+                <img src="../images/shurek/img3.jpg">
+                <img src="../images/shurek/img4.jpg">
+                <img src="../images/shurek/img5.jpg">
+                <img src="../images/shurek/img6.jpg">
+            </div>
+        </div>
+        <div id="navi">
+            <!-- 
+                html 문서에 JS를 작성할 수 있는 영역은?
+                1) script 태그 안에
+                2) 이벤트 핸들러 안
+                3) a href 안에서도 가능 (단, javascript: 를 명시해야 함)
+            -->
+            <a href="javascript:setTarget(0)">●</a>
+            <a href="javascript:setTarget(-500)">●</a>
+            <a href="javascript:setTarget(-1000)">●</a>
+            <a href="javascript:setTarget(-1500)">●</a>
+            <a href="javascript:setTarget(-2000)">●</a>
+            <a href="javascript:setTarget(-2500)">●</a>
+            <a href="javascript:setTarget(-3000)">●</a>
+        </div>
+    </div>
+</body>
+</html>

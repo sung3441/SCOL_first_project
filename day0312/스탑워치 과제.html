@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    #wrapper{
+        margin: auto;
+        width: 600px;
+    }
+    #wrapper input{
+        font-size: 80px;
+        width: 150px;
+        text-align: right;
+    }
+    #button{
+        margin: 30px auto;
+        text-align: center;
+    }
+</style>
+<script>
+
+var t_min;
+var t_sec;
+var t_hour;
+
+var min = 0;  // 분을 담을 전역변수
+var sec = 0;  // 초를 담을 전역변수 (숫자 = 초기화)
+var hour = 0;
+
+var timer;
+
+// 0에 대한 처리를 해주는 함수
+function getZeroString(n){
+    // 이 함수를 호출하는 자가 n에 숫자를 넘기되, 10보다 작으면 앞에 0 추가 아니면 숫자 반환
+    
+    var result;
+
+    if(n<10){
+        result = "0"+n;
+    }else{
+        result = n;
+    }
+    return result;
+}
+
+// 프로그램 가동과 동시에 초기화 시킬 작업이 있다면 init에서 하자
+function init(){
+    t_min = document.getElementById("t_min");
+    t_sec = document.getElementById("t_sec");
+    t_hour = document.getElementById("t_hour");
+    t_hour.value="00";
+    t_min.value="00";
+    t_sec.value="00";
+}
+
+// 초 증가시키기
+function start(){
+    timer=setInterval(function(){
+    sec++;
+
+    if(sec%60==0){
+        sec=0;
+        min++;
+    }
+    if(min==60){
+        min=0;
+        hour++;
+    }
+
+    t_sec.value=getZeroString(sec);
+    t_min.value=getZeroString(min);
+    t_hour.value=getZeroString(hour);
+
+    }, 1000)
+}
+
+function pause(){
+    clearInterval(timer);
+}
+
+function reset(){
+   pause();
+    t_hour.value="00";
+    t_min.value="00";
+    t_sec.value="00";
+    sec=0;
+    min=0;
+    hour=0;
+}
+
+window.addEventListener("load", function(){
+    init();
+});
+    
+</script>
+</head>
+<body>
+    <div id="wrapper">
+        <input type="text" id="t_hour"> 시
+        <input type="text" id="t_min"> 분
+        <input type="text" id="t_sec"> 초
+    </div>
+    <div id="button">
+        <button onclick="start()" style="width: 100px;">start</button>
+        <button onclick="pause()" style="width: 100px;">pause</button>
+        <button onclick="reset()" style="width: 100px;">reset</button>
+    </div>
+</body>
+</html>

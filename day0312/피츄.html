@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    body{margin: 0px;}
+    .wrapper{
+        width: 100%;
+        height: 700px;
+        border: 3px solid red;
+        position: relative;
+    }
+    #pica{
+        width: 70px;
+    }
+</style>
+<script>
+
+    var pica;
+    var targetX=0;  // 도달할 목표지점의 x좌표
+    var targetY=0;  // 도달할 목표지점의 y좌표
+    var a = 0.1;  // 비율계수
+
+    function init(){
+        pica = document.getElementById("pica");
+        pica.style.position="absolute";
+        pica.style.left= 100+"px";
+        pica.style.top= 300+"px";
+    }
+
+    // 피카츄가 도달할 목표지점을 구하자
+    function getPos(){
+        targetX = event.clientX;  // 피츄의 목표 x좌표 설정
+        targetY = event.clientY;  // 피츄의 목표 y좌표 설정
+        console.log("x=",x, "y=",y);
+    }
+    function move(){
+        pica.style.left=parseFloat(pica.style.left)+a*(targetX-parseFloat(pica.style.left))+"px";
+        pica.style.top=parseFloat(pica.style.top)+a*(targetY-parseFloat(pica.style.top))+"px";
+    }
+
+    window.addEventListener("load", function(){
+        init();
+        setInterval("move()", 10);
+    });
+
+</script>
+</head>
+<body onMouseMove="getPos()">
+    <div class="wrapper">
+        <img src="../images/pica.png" id="pica">
+    </div>
+</body>
+</html>
