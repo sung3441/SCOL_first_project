@@ -1,0 +1,45 @@
+<script>
+    /* 과일명 10개를 기존의 변수 사용법으로 메모리에 올려보자 */
+    /*
+    var a = "사과";
+    var b = "딸기";
+    var c = "오렌지";
+    var d = "바나나";
+    var e = "낑깡";
+    var f = "한라봉";
+    var g = "리치";
+    var h = "레몬";
+    var i = "아보카도";
+    var j = "파인애플";
+    document.write(a+"<br>");
+    document.write(b+"<br>");
+    document.write(c+"<br>");
+    document.write(d+"<br>");
+    document.write(e+"<br>");
+    document.write(f+"<br>");
+    document.write(g+"<br>");
+    document.write(h+"<br>");
+    document.write(i+"<br>");
+    document.write(j+"<br>");
+    */
+    /*
+    일일이 데이터의 변수명을 할당하는 방식은 대량의 데이터를 처리할 시 비효율적
+    데이터에 줄을 세워 처리하면 편리하다 (배열 이용
+    */
+    
+    var ani = new Array();  // 배열 선언
+    ani[0]="호랑이";
+    ani[1]="고양이";
+    ani[2]="사자";
+    ani[3]="강아지";
+    ani[4]="코뿔소";
+    ani[5]="하마";
+    ani[6]="기린";
+    ani[7]="오리";
+    ani[8]="사슴";
+    ani[9]="악어";
+
+   for(var i=0; i<=9; i++){
+       document.write(ani[i]+"<br>");
+   }
+</script>

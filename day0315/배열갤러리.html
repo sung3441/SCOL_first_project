@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    .wrapper{
+        width: 500px;
+        height: 500px;
+        margin: auto;
+        background-color: antiquewhite;
+    }
+    #pic{
+        width: 100%;
+        height: 450px;
+        background-color: blanchedalmond;
+    }
+    #pic img{
+        width: 100%;
+        height: 100%;
+    }
+    #control{
+        width: 100%;
+        height: 50px;
+        background-color: thistle;
+        position: relative;
+    }
+    #bt-prev{
+        position: absolute;
+        left: 5px;
+        top: 25%;
+    }
+    #bt-next{
+        position: absolute;
+        right: 5px;
+        top: 25%;
+    }
+</style>
+<script>
+
+    // 이미지명에 규칙이 없기 때문에 배열을 이용해 규칙을 만들었다 
+    var travel=["aa.jpg", "ab.jpg", "ax.jpg", "bm.jpg", "et.jpg", "kg.jpg", 
+    "mx.jpg", "pk.jpg", "ub.jpg", "ya.jpg"];
+
+    var n = 0;  // 이미지 접근을 위한 index
+
+    function next(){
+        n++;
+        // 다음 사진 나오도록 처리하기
+        var photo = document.getElementById("photo");
+        photo.src="../images/travel2/"+travel[n];
+        if(n>9){
+            n=0
+        }
+        
+    }
+
+    function prev(){
+        n--;
+        photo.src="../images/travel2/"+travel[n];
+    }
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="pic">
+            <img src="../images/travel2/aa.jpg" id="photo">
+        </div>
+        <div id="control">
+            <button id="bt-prev" onclick="prev()">prev</button>
+            <button id="bt-next" onclick="next()">next</button>
+        </div>
+    </div>
+</body>
+</html>

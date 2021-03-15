@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    .wrapper{
+        width:500px;
+        height:700px;
+        background-color:yellow;
+        margin: auto;
+    }
+    #word-area{
+        width:100%;
+        height:200px;
+        background-color: cyan;   
+        font-size:70px;   
+        text-align: center; 
+    }
+    #input-area{
+        height:100px;
+    }
+    #input-area input{
+        width: 99%;
+        height:100%;
+        background-color: dodgerblue;
+        color:white;
+        font-weight: bold;
+        font-size:70px;
+        text-align:center;
+    }
+    #feedback{
+        width: 100%;
+        height: 200px;
+        font-size: 100px;
+        color: red;
+        background-color: yellowgreen;
+        font-weight: bold;
+        text-align: center;
+    }
+    #score-area{
+        height: 150px;
+        font-size: 130px;
+        font-weight: bold;
+        color: #000;
+        text-align: center;
+    }
+</style>
+<script>
+    
+    var word = [
+        "허니버터아몬드"
+        , "엄마는외계인"
+        , "민트초코"
+        , "아빠는딸바봉"
+        , "사빠딸"
+        , "슈팅스타"
+        , "초코나무숲"
+        , "레샤베"
+        , "바닐라"
+        , "요거트"
+    ];
+
+    // 다른 함수에서 접근할 예정인 함수이므로 미리 전역변수로 빼놓자
+    var wordArea;
+    var inputArea;
+    var msg;
+    var feedback;
+    var scoreArea;
+    var i = 0;
+    var score = 0;  // 점수가 누적될 전역변수
+
+    function enter(){
+        //alert(event.keyCode);
+
+        //for(var i=0; i<=9; i++){
+        if(event.keyCode==13){
+        // 해당 코드는 맞는 단어를 입력했을 때만 수행하자
+            if(wordArea.innerText==msg.value){
+                i++;
+                score+=10;
+                printWord();
+                // 정답 피드백
+                feedback.innerText="O";
+                scoreArea.innerText=score+"점";
+            }else{
+                // 오답 피드백
+                i++;
+                printWord();
+                feedback.innerText="X";
+            }
+            msg.value="";
+            if(i>=10){
+                wordArea.innerText="";
+                feedback.innerText="게임종료";
+            }
+        }
+    }
+
+    function init(){
+        wordArea=document.getElementById("word-area");
+        inputArea=document.getElementById("input-area");
+        msg=document.getElementById("msg");
+        feedback=document.getElementById("feedback");
+        scoreArea=document.getElementById("score-area");
+    }
+
+    // 유저가 따라치게 될 메시지 출력
+    function printWord(){
+        wordArea.innerText=word[i];
+    }
+
+    window.addEventListener("load", function(){
+        init();
+        printWord();
+        msg.focus();
+    });
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="word-area"></div>
+        <div id="input-area">
+            <input type="text" placeholder="단어입력" id="msg" onkeyup="enter()">
+        </div>
+        <div id="feedback"></div>
+        <div id="score-area"></div>
+    </div>
+</body>
+</html>

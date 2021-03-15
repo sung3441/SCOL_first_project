@@ -1,0 +1,27 @@
+<script>
+
+    var t;
+
+    window.addEventListener("load", function(){
+        makeTable();
+    });
+
+    function makeTable(){
+
+        t = document.createElement("table");
+        t.style.width=500+"px";
+        t.border=1+"px";
+
+        for(var i=3; 1<=i; i--){
+            var tr = document.createElement("tr");
+            for(var j=1; j<=2; j++){
+                var td = document.createElement("td");
+                td.align="center";
+                td.innerText=i+"0"+j+"호";
+                tr.appendChild(td);
+            }
+            t.appendChild(tr);
+        }
+        document.body.appendChild(t);
+    }
+</script>
