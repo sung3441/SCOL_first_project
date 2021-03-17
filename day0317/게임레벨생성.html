@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>게임 스테이지 동적 생성</title>
+<style>
+    #container{
+        width: 1000px;
+        height: 600px;
+        background: url(../images/1624.jpg);
+        background-size: 1000px 600px;
+        margin: auto;
+        position: relative;
+    }
+</style>
+<script>
+
+    var container;
+    var map=[
+        [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+        [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,1],
+        [0,0,0,0,1,2,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+        [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+        [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,2,1,0,0,0],
+        [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0],
+        [0,0,0,0,0,0,0,0,1,0,0,0,0,2,1,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,1,2,0,0,1,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0],
+        [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0]
+    ];
+
+    function init(){
+        container = document.getElementById("container");
+        createBlock();
+    }
+
+    function createBlock(){ // 게임에 들장할 블럭을 container에 올려놓자
+        for(var i=0; i<map.length; i++){  // 층
+            for(var j=0; j<map[i].length; j++){  // 호
+                if(map[i][j]==1){
+                    var img = document.createElement("img");
+                    img.src="../images/block.png";
+                    img.style.width=50+"px";
+                    img.style.height=50+"px";
+                    img.style.position="absolute";
+                    img.style.left=(50*j)+"px";
+                    img.style.top=(50*i)+"px";
+
+                    // 원하는 위치에 1개 이상 배치
+                    container.appendChild(img);
+                }else if(map[i][j]==2){
+                    var img = document.createElement("img");
+                    img.src="../images/ball.png";
+                    img.style.width=50+"px";
+                    img.style.height=50+"px";
+                    img.style.position="absolute";
+                    img.style.left=(50*j)+"px";
+                    img.style.top=(50*i)+"px";
+
+                    container.appendChild(img);
+                }
+            }
+        }
+    }
+
+    window.addEventListener("load", function(){
+        init();
+    });
+
+</script>
+</head>
+<body>
+    <div id="container"></div>
+</body>
+</html>

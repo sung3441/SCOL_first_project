@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이차원배열은 데이터베이스다</title>
+<style>
+    body{
+        margin: 0px;
+    }
+    .wrapper{
+        width: 1200px;
+        height: 600px;
+        background-color: greenyellow;
+        overflow: hidden;
+    }
+    #content{
+        width: 1000px;
+        height: 100%;
+        background-color: aquamarine;
+        float: left;
+        overflow: hidden;  /* rect라는 div 자식이 float 되었으므로 */
+    }
+    #log{
+        width: 200px;
+        height: 100%;
+        background: skyblue;
+        float: left;
+    }
+</style>
+<script>
+
+    var content;
+    var log;
+    var aptBox=[];  // lineBox를 모아놓을 바깥쪽 배열 (아직은 1차원)
+    var border=0;  // 처음에는 안보이게 설정 (디버깅할때만 보여짐)
+    var flag=false;  // 색상 적용 여부를 결정하는 논리값 전역변수
+    var recordArray=[];  // 그림의 경로를 저장할 배열, 2차원 배열 될 예정
+    var recordFlag=false;  // 녹화 여부 결정짓는 논리값
+    var boxSize=5;  // 사각형의 크기
+    var playFlag=false;  // play 재생을 할지 말지 결정짓는 논리값
+    var index=0;  // play할 때 각 배열의 요소를 접근할 index
+
+    function init(){
+        content=document.getElementById("content");
+        log=document.getElementById("log");
+        createRect();  // 사각형 생성 호출
+        setInterval("recPlay()", 200);
+
+        // 메인 화면을 대상으로 마우스를 눌렀을 때 그림이 그려지도록(flag=true)
+        content.addEventListener("mousedown", function(){
+            console.log("마우스 클릭");
+            flag=true;
+        });
+        // 반대로 마우스에서 손을 떼면 그림 그리는 기능을 멈추게(flag=false)
+        content.addEventListener("mouseup", function(){
+            console.log("마우스 클릭 해제");
+            flag=false;
+        });
+    }
+
+    // 그림판의 픽셀을 표현할 사각형 생성
+    function createRect(){
+        for(var a=0; a<(600/boxSize); a++){  // 층 수만큼 반복
+            var lineBox=[];  // 한줄에 존재하는 모든 사각형을 담을 배열
+            for(var i=0; i<(1000/boxSize); i++){
+                var rect = document.createElement("div");
+                rect.style.border=border+"px solid red";
+                rect.style.width=boxSize+"px";
+                rect.style.height=boxSize+"px";
+                rect.style.boxSizing="border-box";
+                rect.style.float="left";
+                // 모든 사각형에 원하는 정보를 심어놓을 수만 있으면 활용하기 좋다
+                rect.id=[a,i];
+                //rect.innerText=rect.id;
+                content.appendChild(rect);  // 그림판에 부착
+                lineBox.push(rect)// 생성된 사각형을 배열에 넣자 (1차원)
+
+                // 생성되는 모든 사각형에 마우스 이벤트 부여
+                rect.addEventListener("click", function(){
+                    // 현재 이벤트를 일으킨 요소의 style 배경색 변경
+                    // 지금 이벤트를 일으킨 요소를 this라고 한다
+                    if(true){
+                        this.style.background="red";
+                        // 층, 호수를 구해 일차원 배열로 저장한 뒤에 recordArray에 저장하기
+                        var pos = this.id.split(",");  // split()은 ,를 기준으로 문자열을 나누고 결과를 배열로 반환
+
+                        console.log("저는 지금"+pos[0]+"층, "+pos[1]+"호에 있어요!");
+
+                        // 녹화자료 수집
+                        if(recordFlag){  // 녹화를 원할 때만 
+                            recordArray.push(pos);  // 일차원 배열
+                            // 정보 로그창에 누적된 좌표를 출력하자
+                            printLog();  // 복잡할 거 같으면 코드를 분리시키자
+                        }
+                    } 
+                });
+            }  
+            // 하나의 lineBox가 완성된 후 aptBox에 집어넣기
+            aptBox.push(lineBox);  // 이 시점부터 2차원 배열이 된다
+        }
+    }
+
+    function setFlag(){
+        border=(border==0)? 1:0;  // 1 or 0
+        // 이미 생성된 사각형들의 border를 조절
+        for(var i=0; i<aptBox.length; i++){  // 아파트 층수만큼
+            for(var j=0; j<aptBox[i].length; j++){  // 아파트 호수만큼
+                // aptBox[a]는 lineBox를 이름대신 배열의 요소를 이용하여 가리킨 것
+                aptBox[i][j].style.border=border+"px solid red";
+            }
+        }
+    }
+    // 녹화 여부를 결정짓는 함수
+    function setRecordFlag(){
+        // 버튼의 시각적 처리
+        document.getElementById("rec-bt").style.background=(recordFlag)? "none":"red";
+        recordFlag=!recordFlag;  // 버튼하나로 원터치로 감
+    }
+
+    // log div에 recordArray에 누적된 정보 출력하기
+    function printLog(){
+        var str="";  // 정보를 누적할 변수
+
+        for(var i=0; i<recordArray.length; i++){  // 아파트 층 수만큼 반복
+            var arr = recordArray[i];  // 일차원 배열 (한 층이 반환)
+            str = str+arr[0]+"층, "+arr[1]+"호 \n";
+        }
+        log.innerText=str;
+    }
+
+    function erase(){
+        // content, div에 출력된 시각적 요소를 초기화
+        // 각 rect에 적용된 빨간색상을 none으로 놓자
+        // 모든 사각형은 aptBox라는 아파트에 들어있다
+        for(var i=0;i<aptBox.length;i++){
+            for(var j=0;j<aptBox[i].length;j++){
+                aptBox[i][j].style.background="none";
+            }
+        }
+    }
+
+    // recordArray에 누적된(녹화된) 사각형의 배경색을 다시 복원하자
+    function recPlay(){
+        if(playFlag){
+        // for(var i=0;i<recordArray.length;i++){  //<--  너무 빨라서 사용하면 안됨 !
+                var dot = recordArray[index++];  // 일차원 배열반환 [x, y]
+                var x = dot[0];  // 접근할 층
+                var y = dot[1];  // 접근할 호
+                aptBox[x][y].style.background="red";
+        // }
+            // index는 배열의 범위내에서만 증가해야 한다
+            if(index >= recordArray.length){
+                playFlag=false;
+                index=0;
+            }
+        }
+    }
+
+    function setPlayFlag(){
+        playFlag=true;
+    }
+
+    window.addEventListener("load", function(){
+        init();
+    });
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="content"></div>
+        <div id="log"></div>
+    </div>
+    <button id="rec-bt" onclick="setRecordFlag()">Rec</button>
+    <button onclick="erase()">Erase</button>
+    <button onclick="setPlayFlag()">Play</button>
+    <button onclick="setFlag()">debug mode</button>
+</body>
+</html>
