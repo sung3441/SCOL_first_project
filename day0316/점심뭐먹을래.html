@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+
+    var food = ["짜장면", "소고기", "치킨", "탕수육", "족발",
+    "햄버거", "마라탕", "육회", "곱창", "까르보나라", "떡볶이", "와플", "뼈해장국", "집밥",
+    "육개장", "수싀", "떡만두국", "마카롱", "샌드위치", "돈까스", "카츠동", "라멘", "스테이크"];
+
+    function getRandom(){
+    // 함수를 호출할 때마다 랜덤값을 반환
+    var r = parseInt(Math.random()*23);  // JS가 0~1사이의 난수를 랜덤하게 반환해준다
+    document.write("오늘의 추천메뉴: ", food[r]);
+    }
+
+</script>
+</head>
+<body>
+    <button onclick="getRandom()">random</button>
+</body>
+</html>

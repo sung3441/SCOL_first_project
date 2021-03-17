@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<script>
+
+// 모든 걸 동적으로 처리할 예정으로 각종 정보를 전역변수로 선언하자
+var imgWidth=140;  // 상품 이미지의 너비
+var imgHeight=200;  // 상품 이미지의 높이
+var gap=5;  // 이미지 사이의 간격
+var imgCount=3;  // 액자에 보여질 이미지 수
+var container;
+var imgArray=["1.jpg", "2.jpg", "3.jpg", "4.jpg", "5.jpg", "6.jpg", "7.jpg", "8.jpg"];
+// 배너에 사용할 모든 이미지를 순서에 맞게 메모리에 올림
+var bannerImg=[];
+// img 태그 자체를 담게 될 배열 (추후 이 배열을 이용하여 이동시키자)
+
+// new Array()  -->  선언만 하고 할당은 되지 않음
+//=[]  -->  선언과 동시에 값을 할당하는 방법 (선언과 동시에 할당)
+var targetX;  // 임계점에 도달한 모든 이미지가 돌아가야할 곳
+var flag=true;  // 이미지 동작 유무 여부의 논리값
+
+function init(){
+    createFrame();
+    createImg();
+    targetX = (bannerImg.length-1)*(imgWidth+gap)
+    setInterval("flowImg()", 10);  // 배너 흘려보내기
+}
+
+function createFrame(){
+    container = document.createElement("div");  // 이미지를 올릴 컨테이너
+    container.style.background="red";
+    container.style.width=gap+((imgWidth+gap)*imgCount)+"px";
+    container.style.height=(gap*2)+imgHeight+"px";
+    container.style.margin="auto";
+    container.style.position="relative";
+    container.style.overflow="hidden";
+
+    // 바디에 부착
+    document.body.appendChild(container);
+}
+
+function createImg(){
+    for(var i=0; i<imgArray.length; i++){
+        var img=document.createElement("img");
+        img.src="../images/shopping/"+imgArray[i];
+        img.style.width=imgWidth+"px";
+        img.style.height=imgHeight+"px";
+        img.style.position="absolute";
+        img.style.left = gap + (imgWidth+gap)*i + "px";
+        img.style.top = gap + "px";
+
+        // 이미지에 마우스 이벤트 연결
+        img.addEventListener("mouseover", function(){
+            flag=false;
+        });
+        img.addEventListener("mouseout", function(){
+            flag=true;
+        });
+
+
+        container.appendChild(img);  // 프레임에 이미지 부착
+        // 비어있는 배열에 이미지를 추가하자
+        bannerImg.push(img);
+    }
+}
+
+// 액자 안의 모든 이미지를 음수 방향으로 움직이자
+function flowImg(){
+    if(flag){
+        for(var i=0; i<bannerImg.length; i++){
+            bannerImg[i].style.left=parseInt(bannerImg[i].style.left) -1+"px";
+            if(parseInt(bannerImg[i].style.left) == -(gap+imgWidth)){
+                console.log("저 도달했어요 ㅠㅠ")
+                bannerImg[i].style.left=targetX+"px";
+            }
+        }
+    }    
+}
+
+window.addEventListener("load", function(){
+    init();
+});
+
+</script>
+<body>
+    
+</body>
+</html>

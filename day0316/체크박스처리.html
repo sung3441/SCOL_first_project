@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+
+    function checkAll(){
+        /*document.getElementById("box1").checked=
+        document.getElementById("mainbox").checked;*/
+        var ch = document.getElementsByName("ch");
+        for(var i =0; i<ch.length; i++){
+            ch[i].checked=document.getElementById("mainbox").checked;
+        }
+    }
+
+</script>
+</head>
+<body>
+    <table border="1px" width="600px">
+        <tr>
+            <td width="30px">
+                <input type="checkbox" id="mainbox" onclick="checkAll()">
+            </td>
+            <td>이메일 제목</td>
+        </tr>
+        <!-- 
+            id, name 공통점 및 차이점
+            공통점//  문서 내의 요소들 간 식별을 위해 사용
+            차이점//  id는 중복 불가, name 중복 가능
+            특히 html에서의 name은 JS에서의 배열로 존재할 수 있다
+         -->
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                국민은행 대출 안내
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                (광고) 라식/라섹 필요하신 분들을 찾습니다~
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                (광고) 교촌 990원~ 득템찬스
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                쿠팡페이(주)의 전자금융거래 이용약관 개정 공지
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                (광고) 맛있는 컵라면 할인전 + 매진주의
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                [네이버페이] 결제하신 내역을 안내해드립니다.
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                Kougle 계정 보안 강화하기
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                $300 AWS 크레딧
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="checkbox" name="ch">
+            </td>
+            <td>
+                Experiment with projects
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    body{
+        margin: 0px;
+    }
+    .wrapper{
+        width: 1200px;
+        height: 600px;
+        background-color:aqua;
+        overflow: hidden;
+    }
+    #content{
+        width: 1000px;
+        height: 100%;
+        background:url("../images/roller.png");
+        background-repeat: no-repeat;
+        background-size: 1000px 600px;
+        float: left;
+    }
+    #log{
+        width: 200px;
+        height: 100%;
+        background: lightblue;
+        float: left;
+        overflow: scroll;
+    }
+</style>
+<script>
+
+    var content;
+    var log;
+    var pointArray=[];  // 점의 쌍을 모아놓을 이차원배열이 될 일차원 배열
+    var img;  // 주인공 이미지
+    var index=0;  // 이차원 배열을 순차적으로 접근하기 위한 변수
+
+    function init(){
+        content=document.getElementById("content");
+        log=document.getElementById("log");
+        createCharacter();  // 롤코 탈 주인공 피쮸
+    }
+
+    function createCharacter(){
+        img=document.createElement("img");
+        img.src="../images/pica.png";
+        img.style.width=50+"px";
+        img.style.position="absolute";  // 프로그래밍적으로 위치 지정해야 추후 제어가능
+        img.style.left=100+"px";
+        img.style.top=100+"px";
+        content.appendChild(img);  // 화면에 부착
+    }
+
+    function createPos(){
+        // 마우스 클릭 위치와 동일한 위치에 점 찍어보기
+        var span=document.createElement("span");
+        span.innerText="●";
+        span.style.color="navy";
+        span.style.fontSize=2+"px";
+        span.style.position="absolute";
+
+        var x=event.clientX;
+        var y=event.clientY;
+
+        pos=[x, y]; // 점 생성
+        pointArray.push(pos);
+        // 생성된 점의 좌표 배열을 pointArray에 누적
+        // 한 쌍의 좌표(x, y)를 담을 배열 생성
+
+        span.style.left=x+"px";
+        span.style.top=y+"px";
+        // 좌표 정보 저장
+
+        content.appendChild(span);
+
+        printPos();  // 기록 남기기
+    }
+
+    // 좌표 출력
+    function printPos(){
+        var str="";  // 로그에 누적될 스트링(문자열) 변수선언
+
+        // 좌표가 누적된 pointArray의 데이터를 div에 출력
+        for(var i=0; i<pointArray.length; i++){  // 점을 찍은 횟수만큼
+                var box = pointArray[i];  // 안쪽 박스
+                str = str +"["+box[0]+", "+box[1]+"]\n";
+            }
+            // 문자열이 누적된 결과물을 최후에 한번만 div에 innerText로 넣어주자
+            log.innerText = str;
+        }
+    
+    function move(){
+        // 문서 내의 img 좌표를 이차원배열의 x, y좌표를 이용하여 움직이자
+        var x = pointArray[index][0];  // x좌표
+        var y = pointArray[index][1];  // y좌표
+        
+        img.style.left= x+"px";
+        img.style.top= y+"px";
+        index++;
+    }
+
+    window.addEventListener("load", function(){
+        init();
+    });
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="content" onmousedown="createPos()"></div>
+        <div id="log">좌표 로그</div>
+    </div>
+    <button onclick="move()">수동</button>
+    <button onclick="auto()">자동</button>
+</body>
+</html>

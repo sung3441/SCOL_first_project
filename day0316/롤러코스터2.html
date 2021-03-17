@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+body{margin:0px;}    
+.wrapper{
+    width:1200px;
+    height:600px;
+    background-color: yellow;
+    overflow: hidden; /*자식의 float 때문에...*/
+}    
+#content{
+    width:1000px;
+    height:100%;
+    background:url("../images/roller.png");
+    background-repeat: no-repeat;
+    background-size: 1000px 600px;
+    float:left;
+}
+#log{
+    width:200px;
+    height:100%;
+    background:greenyellow;
+    float:left;
+}
+</style>
+<script>
+var content;
+var log;
+var pointArray=[]; //점의쌍을 모아놓을 이차원배열이 될 일차원 배열
+
+function init(){
+    content=document.getElementById("content");
+    log=document.getElementById("log");
+}
+
+function createPos(){
+    //마우스를 클릭한 위치와 동일한 위치에 점을 찍어보자!!
+    var span=document.createElement("span");
+    span.innerText="●";
+    span.style.color="red";
+    span.style.fontSize=4+"px";
+    span.style.position="absolute";
+    var x=event.clientX;
+    var y=event.clientY;
+
+    //한쌍의 좌표(x,y)를 담을 배열 생성 
+    var pos=[ x, y]; //점 생성
+    //생성된 점의 좌표 배열을 pointArray에 누적 
+    pointArray.push(pos); 
+
+    span.style.left=x+"px";
+    span.style.top=y+"px";
+    //현재 마우스에 의해 얻어진 좌표정보가 아직 저장되고 있지 않다..
+    //따라서 좌표정보를 저장해보자!!
+
+
+    content.appendChild(span);
+}   
+
+window.addEventListener("load", function(){
+    init();
+});
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="content" onMouseDown="createPos()"></div>
+        <div id="log">좌표 로그</div>
+    </div>    
+</body>
+</html>
