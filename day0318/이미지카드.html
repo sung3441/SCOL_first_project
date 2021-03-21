@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    #wrapper{
+        width: 1000px;
+        height: 340px;
+        background: mediumturquoise;
+        margin: auto;
+        overflow: hidden;
+    }
+</style>
+<script>
+
+    var wrapper;
+    var cardArray=[];  // 생성된 카드를 담을 배열 (순서를 두면 반복문으로 처리 가능)
+    var a = 0.1;  // 부드러움 정도
+    var targetY=[];  // 텍스트박스의 목표지점
+    var imgArray=["beach.png", "road.jpg", "nature.jpg"];
+    var msgArray=["그리운 내 고향..", "장 보러 가던 길..", "집 앞 산책로.."];
+
+    function init(){
+        wrapper = document.getElementById("wrapper");
+
+        for(var i=0;i<3;i++){
+            targetY[i]=270;  // 3개의 targetY 값을 270으로 설정
+            cardArray[i] = createCard(i, imgArray[i], msgArray[i]);  // 생성된 카드를 전역변수로 빼놓음
+            wrapper.appendChild(cardArray[i]);
+        }
+    }
+
+    // 카드를 생성하는 함수
+    // 매개변수 index의 역할: 0일 때 targetY[0], 1일 때 targetY[1], 2일 때 targetY[2] 사용
+    function createCard(index, src, msg){
+        var card=document.createElement("div");  // 이미지를 배경으로 안고있는 바깥쪽 카드
+        card.style.width=300+"px";
+        card.style.height=320+"px";
+        card.style.backgroundImage="url(../images/nature/"+src+")";
+        card.style.backgroundSize="cover";
+        card.style.position="relative";
+        card.style.overflow="hidden";
+        card.style.float="left";
+        card.style.margin=5+"px";
+
+        // 텍스트 박스
+        var textBox=document.createElement("div");
+        textBox.style.width=300+"px";
+        textBox.style.height=320+"px";
+        textBox.style.backgroundColor="rgb(65, 55, 63)";
+        textBox.style.opacity=0.8;  // 0 투명, 1 불투명
+        textBox.style.position="absolute";
+        textBox.style.top=270+"px";
+        textBox.innerText=msg;
+        textBox.style.color="white";
+        textBox.style.fontSize=20+"px"
+        textBox.style.textAlign="center"
+        textBox.style.boxSizing="border-box";
+        textBox.style.paddingTop=10+"px";
+
+        // 마우스 오버 이벤트 구현
+        textBox.addEventListener("mouseover", function(){
+            targetY[index]=0;
+        });
+
+        textBox.addEventListener("mouseout", function(){
+            targetY[index]=270;
+        });
+
+        // 조립 (textBox를 card에 넣자)
+        card.appendChild(textBox);
+
+        return card;
+    }
+
+    // 부드럽게 OLNL
+    function slideUpDown(){
+        for(var i=0; i<cardArray.length; i++){
+            // 물체위치 = 기존 물체위치 + a * (목표지점 - 기존 물체위치)
+            var textBox = cardArray[i].children[0];  // textBox라는 안쪽 div를 지칭
+            textBox.style.top=parseFloat(textBox.style.top)+a*(targetY[i]-parseFloat(textBox.style.top))+"px";
+        }
+    }
+
+    window.addEventListener("load", function(){
+        init();
+        setInterval("slideUpDown()", 10);
+    });
+
+</script>
+</head>
+<body>
+    <div id="wrapper"></div>
+</body>
+</html>

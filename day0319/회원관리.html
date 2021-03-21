@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<style>
+    .wrapper{
+        width: 1000px;
+        height: 600px;
+        background: yellow;
+        margin: auto;
+        overflow: hidden;
+    }
+    #regist-area, #detail-area{
+        width: 150px;
+        height: 100%;
+        background: rgb(159, 214, 221) ;
+        float: left;
+    }
+    #regist-area input, #detail-area input{
+        width: 90%;
+        font-size: 18px;
+        border-radius: 5%;
+        background-color:rgb(171, 240, 225);
+        color: rgb(202, 202, 202)
+        border: 1px solid #ffffff
+    }
+    #list-wrapper{
+        width: 700px;
+        height: 100%;
+        background: aquamarine;
+        float: left;
+    }
+</style>
+<script src='../JS/font.js'></script>
+<script>
+
+    var listArea;  // 테이블이 출력될 div 영역
+    var detailArea;
+    var t_id, t_name, t_phone, t_money;
+    var t_id2, t_name2, t_phone2, t_money2;
+    var memberArray=[];  // 지금은 일차원이지만 곧 이차원 당할 예정
+    // 2차월배열은 표이고
+    var index=0;
+    var searchBox;
+    var indexArray=[];
+
+    // 입력 양식의 데이터를 보관한 후, 테이블로 출력해보자
+    // 등록하기
+    function regist(){
+        // 등록 전에 숫자형 데이터에 대해 유효성 체크를 해두자
+
+        if(isNaN(t_money.value)){
+            alert("야 이 새 1 끼 야");
+            t_money.value="";
+            t_money.focus();
+            return;  // 함수 호출한 곳으로 돌아가 !!
+        }
+        // 등록버튼에 의해 존재할 수 있는 회원은 1명
+        // 1명의 데이터는 1차원배열에 담으면 된다
+        var member=[];  // 비어있는 배열 선언
+        member[0]=t_id.value;
+        member[1]=t_name.value;
+        member[2]=t_phone.value;
+        member[3]=t_money.value;
+        // 한 사람의 정보가 메모리에 출력
+        // 이차원 배열 용도로 선언한 memberArray에 추가하자
+
+        memberArray.push(member);
+
+        getList(); // 등록된 데이터를 표로 시각화 시키기 위해 호출
+
+        t_id.value="";
+        t_name.value="";
+        t_phone.value="";
+        t_money.value="";
+    }
+    
+    // 데이터를 테이블로 출력하기
+    function getList(){
+        var tag = "<table width=\"100%\" border=\"1\">";
+        tag+="<tr style=\"background:pink\">";
+        tag+="<td>No</td>";
+        tag+="<td>ID</td>";
+        tag+="<td>Name</td>";
+        tag+="<td>Phone</td>";
+        tag+="<td>Money</td>";
+        tag+="</tr>";
+        
+        // DB에 있는 데이터를 이용하여 현재까지 누적된 회원 정보를 출력하자
+
+        var sum=0;
+
+        for(var i=memberArray.length-1;i>=0;i--){
+            tag+="<tr onclick=\"rightBox("+i+")\">"; 
+            tag+="<td>"+(i+1)+"</td>";  // 배열에 넣은 적이 없으므로 반복문에서 처리 불가
+            for(var a=0; a<memberArray[i].length;a++){
+                tag+="<td>"+memberArray[i][a]+"</td>";
+            }
+            // 호수가 3인 데이터는 money이므로 이걸 sum변수에 누적시키자
+            sum = sum + parseInt(memberArray[i][3]);
+            // 돈을 누적하는 횟수는 층과 관련 (그래서 바깥 for문에서 처리함)
+            
+            tag+="</tr>";
+        }
+        tag+="<tr>";
+        tag+="<td colspan='5' align='right'>가입 회원 수:"+memberArray.length+"명, 누적 자산:"+sum+"원</td>";
+        tag+="</tr>";
+        tag+="</table>";
+
+        //document.write()와 비슷하지만 document.write()은
+        //문서 전체에 지정한 문자열을 출력한다.
+        listArea.innerHTML=tag;
+    }
+    
+    function rightBox(n){
+        t_id2.value=memberArray[n][0];
+        t_name2.value=memberArray[n][1];
+        t_phone2.value=memberArray[n][2];
+        t_money2.value=memberArray[n][3];
+
+        index=n;
+    }
+
+    function search(){
+        var select = document.getElementById("select").options.selectedIndex;
+
+        for(var i=0; i<memberArray.length; i++){
+            if(memberArray[i][select]==searchBox.value){
+                indexArray.push(i);
+            }
+        }
+            if(indexArray.length>0){
+                var tag = "<table width=\"100%\" border=\"1\">";
+                tag+="<tr style=\"background:pink\">";
+                tag+="<td>No</td>";
+                tag+="<td>ID</td>";
+                tag+="<td>Name</td>";
+                tag+="<td>Phone</td>";
+                tag+="<td>Money</td>";
+                tag+="</tr>";
+
+                for(var i=0; i<indexArray.length; i++){
+                    tag+="<tr onclick=\"rightBox("+indexArray[i]+")\">"; 
+                    tag+="<td>"+(indexArray[i]+1)+"</td>";  // 배열에 넣은 적이 없으므로 반복문에서 처리 불가
+                    for(var a=0; a<memberArray[indexArray[i]].length;a++){
+                        tag+="<td>"+memberArray[indexArray[i]][a]+"</td>";
+                    }
+                    tag+="</tr>";
+                }
+                tag+="</table>";
+                listArea.innerHTML=tag;
+            }else{
+                alert("해당 고객은 존재하지 않습니다.");
+        }
+        searchBox.value="";
+    }
+
+    function modify(){
+        if(confirm(memberArray[index][1]+"고객의 정보를 수정하시겠습니까?")){
+            memberArray[index][0]=t_id2.value;
+            memberArray[index][1]=t_name2.value;
+            memberArray[index][2]=t_phone2.value;
+            memberArray[index][3]=t_money2.value;
+            getList();
+
+            alert(memberArray[index][1]+"고객의 정보를 수정하였습니다.");
+            t_id2.value="";
+            t_name2.value="";
+            t_phone2.value="";
+            t_money2.value="";
+        }
+    }
+
+    function del(){
+        if(confirm(memberArray[index][1]+"고객의 정보를 삭제하시겠습니까?")){
+            alert(memberArray[index][1]+"고객의 정보를 삭제했습니다.");
+            memberArray.splice(index, 1);
+            getList();
+
+            t_id2.value="";
+            t_name2.value="";
+            t_phone2.value="";
+            t_money2.value="";
+        }
+    }
+
+    function init(){
+        listArea = document.getElementById("list-area");
+        // 등록용 텍스트 필드
+        t_id = document.getElementById("t_id");
+        t_name = document.getElementById("t_name");
+        t_phone = document.getElementById("t_phone");
+        t_money = document.getElementById("t_money");
+        
+        detailArea = document.getElementById("detail-area");
+        // 상세보기용 텍스트 필드
+        t_id2 = document.getElementById("t_id2");
+        t_name2 = document.getElementById("t_name2");
+        t_phone2 = document.getElementById("t_phone2");
+        t_money2 = document.getElementById("t_money2");
+
+        searchBox=document.getElementById("searchBox");
+
+        getList();
+    }
+
+    window.addEventListener("load", function(){
+        init();
+    });
+
+</script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="regist-area">
+            <input type="text" id="t_id" placeholder="ID 입력">
+            <input type="text" id="t_name" placeholder="이름 입력">
+            <input type="text" id="t_phone" placeholder="연락처 입력">
+            <input type="text" id="t_money" placeholder="현금자산">
+            <button onclick="regist()">등록</button>
+        </div>
+        <div id="list-wrapper">
+            <div id="search-area">
+                <select id="select">
+                    <option value="">ID로 검색</option>
+                    <option value="">이름으로 검색</option>
+                </select>
+                <input type="text" id="searchBox" placeholder="검색어 입력">
+                <button style='font-size:18px' onclick="search()">
+                    Search<i class='fas fa-search'></i>
+                </button>
+            </div>
+            <div id="list-area"></div>
+        </div>
+        <div id="detail-area">
+            <input type="text" id="t_id2" placeholder="ID 입력">
+            <input type="text" id="t_name2" placeholder="이름 입력">
+            <input type="text" id="t_phone2" placeholder="연락처 입력">
+            <input type="text" id="t_money2" placeholder="현금자산">
+            <button onclick="modify()">수정</button>
+            <button onclick="del()">삭제</button>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    // 표(데이터)를 클릭했을 때 오른쪽 검색창에 정보 뜨게 하기
+    // 오른쪽에서 정보를 바꾸고 수정버튼 누르면 prompt 수정할래요 and 수정 반영
+    // 삭제 버튼을 누르면 prompt(삭제할래요?) ok버튼 누르면 창 닫히면서 해당 레코드 사라짐
+    // 검색 버튼 활성화...
+</script>
