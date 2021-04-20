@@ -1,0 +1,101 @@
+<%
+    var totalRecord=param.record.length;//총 게시물 수
+    var pageSize=10; //한 페이지에 보여줄 게시글 수
+    var blockSize=10; //한 페이지의 페이지 블럭 개수
+    var totalPage=Math.ceil(totalRecord/pageSize); //게시글 수에 맞는 페이지 블럭 개수 
+    var currentPage=parseInt(param.currentPage1);//현재 페이지
+    var curPos=(currentPage-1)*pageSize; //몇번째 제이슨을 사용할지 결정(게시글 하나의 정보)
+    var num=totalRecord-curPos; // 게시글 번호
+
+    var firstPage= currentPage-(currentPage-1)%blockSize;
+    var lastPage=firstPage+(blockSize-1);
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+.pageNum{
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+</style>
+</head>
+<body>
+  <%- include ('../inc/topnavi')%>
+<h2>상품 리스트</h2>
+
+<table>
+  <tr>
+    <th>No</th>
+    <th>상품명</th>
+    <th>상품이미지</th>
+    <th>상품가격</th>
+  </tr>
+  <%for(var i=1; i<=pageSize; i++){%>
+      <%if(num<1)break;%>
+      <%var product=param.record[curPos++];%>
+  <tr>
+    <td><%=(num--)%></td>
+    <td><a href="/admin/product/detail?product_id=<%=product.product_id%>"><%=product.product_name%></a></td>
+    <td>
+        <img src="/upload/image/<%=product.product_img%>" width="100px">
+    </td>
+    <td><%=product.product_price%></td>
+  </tr>
+  <%}%>
+  <tr>
+
+    <td colspan="4" style="text-align: center;">
+        <%if(firstPage-1<1){ //lastPage+1한 결과가 보유한 총 페이지를 넘어서면 욕!%>
+            <a href="javascript:alert('이전 페이지가 없습니다');">◀</a>
+            <%}else{%>
+            <a href="/admin/product/list?currentPage=<%=firstPage-1%>">◀</a>
+        <%}%>
+
+        <%for(var i=firstPage; i<=lastPage; i++){%>
+            <%if(i>totalPage)break;%>
+            <a href="/admin/product/list?currentPage=<%=i%>"<%if(i==currentPage){%> class="pageNum"<%}%>>[<%=i%>]</a>
+        <%}%>
+
+        <%if(lastPage+1>totalPage){ //lastPage+1한 결과가 보유한 총 페이지를 넘어서면 욕!%>
+            <a href="javascript:alert('다음 페이지가 없습니다');">▶</a>
+            <%}else{%>
+            <a href="/admin/product/list?currentPage=<%=lastPage+1%>">▶</a>
+        <%}%>    
+    </td>
+  </tr>
+</table>
+<input type="button" value="상품등록" onclick="location.href='/admin/product/registform'">
+</body>
+</html>

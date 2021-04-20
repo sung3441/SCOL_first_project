@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<script>
+    function registCheck(){
+      //유효성 체크
+      if(document.getElementById("topcategory_id").value=="0"){
+          alert("상위 카테고리를 선택하셔야 합니다");
+          return; //함수 호출한 곳으로 실행부를 돌아가게 함 
+      }
+      if(document.getElementById("product_name").value==""){
+          alert("상품명을 입력하세요");
+          document.getElementById("product_name").focus();
+          return;
+      }
+      if(document.getElementById("product_price").value==""){
+          alert("상품가격을 입력하세요");
+          document.getElementById("product_price").focus();
+          return;
+      }
+      if(isNaN(document.getElementById("product_price").value)){
+          alert("상품가격을 숫자로 입력하세요");
+          document.getElementById("product_price").focus();
+          return;
+      }
+      if(document.getElementById("product_detail").value==""){
+          alert("상세설명을 입력하세요");
+          document.getElementById("product_detail").focus();
+          return;
+      }
+      if(document.getElementById("product_img").value==""){
+          alert("상품이미지를 선택하세요");
+          return;
+      }
+      form1.action="/admin/product/regist";
+      form1.method="post";
+      form1.encoding="multipart/form-data";
+      form1.submit();
+  }
+</script>
+</head>
+<body>
+  <%- include ('../inc/topnavi')%>
+<h3>판매 상품 등록</h3>
+
+<div class="container">
+  <form name="form1">
+    <select id="topcategory_id" name="topcategory_id" >
+      <option value="0">상위 카테고리 선택</option>
+      <%for(var i=0; i<record.length; i++){%>
+          <%var topcategory=record[i]; //배열에 들어있는 json 꺼내기!%>
+          <option value="<%=topcategory.topcategory_id%>"><%=topcategory.top_name%></option>
+      <%}%>
+  </select>
+    <label for="fname">상품명</label>
+    <input type="text" id="product_name" name="product_name" placeholder="Product name..">
+
+    <label for="lname">상품가격</label>
+    <input type="text" id="product_price" name="product_price" placeholder="Product Price..">
+
+
+
+
+    <label for="subject">상세설명</label>
+    <textarea id="product_detail" name="product_detail" placeholder="Product Detail.." style="height:200px"></textarea>
+    <input type="file" name="product_img" id="product_img">
+    <p></p>
+    <input type="button" value="상품등록" onclick="registCheck()">
+    <input type="button" value="목록" onclick="location.href='/admin/product/list'">
+  </form>
+</div>
+
+</body>
+</html>
