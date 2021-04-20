@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+input[type=text], textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+textarea{
+  height:100px;
+}
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+input[type=button]:hover {
+  background-color: #45a049;
+}
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+.comment-list div{
+  display:inline-block; /*block속성(크기 가능)을 유지하되, 공존할수있슴*/
+  border:1px solid #CCC;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+$(function(){
+  $($("input[type='button']")[0]).on("click", function(){ //삭제
+    del();
+  });
+  $($("input[type='button']")[1]).on("click", function(){ //목록
+    getList();
+  });
+});
+
+function del(){
+  if(confirm("삭제하시겠습니까??")){
+    $("form").attr("action","/admin/game/del");
+    $("form").attr("method","post"); //post 방식
+    $("form").submit(); //전송
+  }
+}
+
+function getList(){
+  location.href="/admin/game/list";
+}
+
+// $(function(){
+  
+//   $($("input[type='button']")[0]).click(function(){//삭제
+//     if(confirm("이 상품을 삭제 하시겠습니까?")){
+//       $("form").attr({
+//         action:"/admin/game/del",
+//         method:"post",
+//         // encoding:"multipart/form-data"
+//       });
+//       $("form").submit();
+//     }
+//   });
+//   $($("input[type='button']")[1]).click(function(){//목록
+//       location.href="/admin/game/list";
+//   });
+// })
+
+</script>
+</head>
+<body>
+    <%- include ('../inc/top_navi')%>
+<h3>Edit Information</h3>
+<div class="container">
+  <form name="form1">
+    <input type="hidden" name="game_id" id="game_id" value="<%=param.record.game_id%>">
+    <input type="text" name="game_kind" id="game_kind" value="<%=param.record.game_kind%>">
+    <input type="text" id="game_name" name="game_name" value="<%=param.record.game_name%>">
+    <input type="text" id="game_price" name="game_price" value="<%=param.record.game_price%>">
+    <textarea id="game_detail" name="game_detail" style="height: 300px;"><%=param.record.game_detail%></textarea>
+    <img src="/gameimg/<%=param.record.game_img%>" style="height: 300px;"><p>
+    <input type="button" value="delete">
+    <input type="button" value="list">
+  </form>
+</div>
+</body>
+</html>
+    

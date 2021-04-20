@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<script>
+  
+  function regist(){
+    if(document.getElementById("game_kind").value==""){
+      // alert("게임의 장르를 선택해주세요");
+      // return;
+    }
+
+    if(document.getElementById("game_name").value==""){
+      alert("게임의 이름을 적어주세요");
+      return;
+    }
+
+    if(document.getElementById("game_price").value==""){
+      alert("가격을 책정해주세요");
+      return;
+    }
+
+    if(document.getElementById("game_detail").value==""){
+      alert("게임의 설명란을 작성해주세요");
+      return;
+    }
+
+    if(document.getElementById("game_img").valuer==""){
+      alert("게임의 메인 이미지를 등록해주세요");
+      return;
+    }
+
+    form1.action="/admin/game/regist";
+    form1.method="post";
+    form1.encoding="multipart/form-data";
+
+    form1.submit(); //전송
+  }
+</script>
+</head>
+<body>
+  <%- include ('../inc/top_navi')%>
+<h3>Upload Game</h3>
+
+<div class="container">
+  <form name="form1">
+    <select id="game_kind" name="game_kind" onchange="">
+    <option value="">장르 선택</option>
+    <option value="sports">sports</option>
+    <option value="rpg">rpg</option>
+    <option value="shooting">shooting</option>
+    </select>
+
+    <input type="text" id="game_name" name="game_name" placeholder="게임명 입력">
+    <input type="text" id="game_price" name="game_price" placeholder="가격 입력">
+    <textarea placeholder="게임 설명" id="game_detail" name="game_detail" style="height: 300px;"></textarea>
+    <input type="file" id="game_img" name="game_img"><p>
+    <input type="button" value="upload" onclick="regist()">
+  </form>
+</div>
+</body>
+</html>
