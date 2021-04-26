@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+<script>
+function moneyUp(){
+    var pay = document.getElementById("money").value;
+    if(isNaN(pay)){
+        alert("금액은 숫자 형식으로 입력하세요!!");
+    }else{
+        if(confirm("정말로 충전하시겠습니까??")){
+            location.href="/shop/product/money?money="+pay;
+            alert("충전 완료");
+            window.close();
+        }else{
+            window.close();
+        }
+    }
+}
+</script>
+</head>
+<body>
+<form>
+요금 충전하기
+<input type="text" name="money" id="money">
+<button type="button" onclick="moneyUp()">충전</button>
+</form>
+</body>
+</html>

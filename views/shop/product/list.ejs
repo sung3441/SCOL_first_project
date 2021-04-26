@@ -1,0 +1,196 @@
+<%
+    var totalRecord = param.record.length; //총 레코드의 수!!
+    var pageSize = 16; //페이지당 보여질 레코드의 수!!
+    var totalPage = Math.ceil(totalRecord/pageSize); 
+    //총 페이지 수 나머지가 있을 경우 올림해줌
+
+    var blockSize = 10; //블럭 당 보여질 페이지 수
+    var currentPage = param.currentPage;//넘겨받은 페이지 정보; //현재 페이지
+    var firstPage = currentPage-(currentPage-1)%10;
+    var lastPage = firstPage+(blockSize-1);
+    var curPos = (currentPage-1)*pageSize; //페이지당 배열의 시작 인덱스
+    var num = totalRecord - curPos;
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<style>
+body {font-family: Verdana, sans-serif; margin:0}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  background-color: #f2f2f2;
+  position: relative;
+  width: 100%;
+  height: 1000px;
+}
+
+h3{
+  margin-top: 40px;
+  font-size: 60px;
+  text-align: center;
+}
+
+.side{
+  float: left;
+  width: 20%;
+  height: 90%;
+  /* background-color: chocolate; */
+  margin-left: 2%;
+  margin-top: 2%;
+  padding-top: 15px;
+}
+
+.content{
+  float: left;
+  width: 74%;
+  height: 90%;
+  /* background-color: cornflowerblue; */
+  margin-left: 2%;
+  margin-top: 2%;
+
+}
+
+.filter{
+  font-size: 30px;
+  margin-left: 15px;
+}
+
+.img-box{
+  width: 20%;
+  height: 20%;
+  float: left;
+  /* background-color: tomato; */
+  margin-top: 2%;
+  margin-right: 2%;
+  background-size: 100% 100%;
+}
+
+.pagging{
+  padding-top: 30px;
+  text-align: center;
+  width: 86%;
+  height: 100px;
+  font-size: 20px;
+  float: left;
+}
+
+.overlay {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: white;
+}
+
+.img-box:hover .overlay {
+  opacity: 1;
+}
+
+.text {
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+</style>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script>
+function category(index){
+  location.href = "/shop/product/list?topcategory_id="+index;
+}
+
+$(function(){
+
+});
+
+</script>
+</head>
+<body>
+  <%- include ('../inc/header')%>
+<div class="container">
+  <div class="side">
+    <span class="filter">Filter</span>
+    <p>
+    <select name="" id="" onchange="category(this.value)" >
+      <option value="0"<%if(category == 0){%>selected <%}%>>category</option>
+      <option value="1"<%if(category == 1){%>selected <%}%>>keyboard</option>
+      <option value="2"<%if(category == 2){%>selected <%}%>>mouse</option>
+      <option value="3"<%if(category == 3){%>selected <%}%>>speaker</option>
+      <option value="4"<%if(category == 4){%>selected <%}%>>headset</option>
+    </select>
+  </div>
+  <div class="content">
+    <%for(var i = 0; i < pageSize; i++){%>
+      <%(num--)%>
+      <%if(num<0)break;%>
+      <%var product = param.record[curPos++]%>
+      <div class="img-box" style="background-image: url('/upload/product_img/<%=product.product_img%>');"> 
+        <div class="overlay">
+          <div class="text" onclick="location.href='/shop/product/detail?product_id=<%=product.product_id%>'">상세보기</div>
+        </div>
+      </div>
+      <%}%>
+      <div class="pagging">
+        <%if(firstPage-1 <1){%>            
+        <%}else{%>
+        <a href="/shop/product/list?currentPage=<%=firstPage-1%>">◀</a>
+        <%}%>
+
+        <%for(var i = firstPage; i <= lastPage; i++){%>
+        <%if(i > totalPage)break;%>
+        <a href="/shop/product/list?currentPage=<%=i%>" style="text-decoration: none;"><%=i%></a>
+        <%}%>
+
+        <%if(lastPage+1 > totalPage){//lastPage+1 한 결과가 보유한 총 페이지를 넘어서면 욕!!%>
+        <%}else{%>
+        <a href="/shop/product/list?currentPage=<%=lastPage+1%>">▶</a>
+        <%}%>
+      </div>
+  </div>
+</div>
+<%- include ('../inc/footer')%>
+</body>
+</html>

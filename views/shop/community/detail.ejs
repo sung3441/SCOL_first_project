@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<style>
+body {font-family: Verdana, sans-serif; margin:0}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+#preview{
+  width:300px;/*너비만 주면 높이면 이미지의 비율을 알아서 잡는다..*/
+
+}
+
+#main_img{
+  width: 30%;
+  height: 20%;
+
+}
+</style>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js">
+</script>
+<script>
+//목록
+$(function(){
+  $($("input[type='button']")[0]).on("click",function(){//목록버튼
+    location.href="/shop/community/list";
+  });
+  //수정
+  $($("input[type='button']")[1]).on("click",function(){//수정버튼
+    if(confirm("수정 하시겠습니까?")){
+      $("form").attr({
+        action:"/shop/community/edit",
+        method:"post",
+        enctype:"multipart/form-data"
+      });
+      $("form").submit();
+    };
+  });
+  //삭제
+  $($("input[type='button']")[2]).on("click",function(){//삭제버튼
+    if(confirm("삭제하시겠습니까?")){
+      $("form").attr({
+        action:"/shop/community/del",
+        method:"post",
+        encoding:"multipart/form-data"
+      });
+      $("form").submit();
+    }
+  });
+//지정된 옵션으로 문자열의 일부를 추철하자
+//이미지 선택시.. 
+$("input[type='file']").on("change",function(){
+   //preview라는 이미지의 src값을 선택한 값을 변경!!
+   
+   //지정된 옵션으로 문자열의 일부를 추철하자   
+var filename=$(this).val().substring($(this).val().lastIndexOf("\\")+1,$(this).val().length);
+   console.log("추출된 파일명은",filename);
+   
+   $("#preview").attr("src","http://localhost:9999/images/"+filename);
+  });
+  $("input[type='file']").on("change",function(){
+  //preview라는 이미지의 src값을 선택한 값을 변경!!
+
+  //지정된 옵션으로 문자열의 일부를 추철하자
+    var filename=$(this).val().substring($(this).val().lastIndexOf("\\")+1,$(this).val().length);
+    console.log("추출된 파일명은",filename);
+
+    $("#preview").attr("src","http://localhost:9999/images/"+filename);
+  });
+});
+</script>
+</head>
+<body>
+<%- include ('../inc/header')%>
+<div class="container">
+  <form>
+    <img src="/upload/community_img/<%=record.community_img%>" id="main_img">
+    <br>
+    <input type="hidden"  name="community_id" value="<%=record.community_id%>"> 
+    <input type="hidden" name="filename" value="<%=record.community_img%>">
+    제목 : <input type="text"  name="title" value="<%=record.title%>"> 
+    작성자 : <input type="text" name="writer" value="<%=record.writer%>">
+    <textarea id="subject" name="content"  style="height:200px"><%=record.content%></textarea>
+ 
+    <!-- input 태그의 type중 submit은 디폴트로 전송기능이 포함되어 있기 때문에 
+    클릭만으로도, 전송이 발생함 , 따라서 일반 버튼화시켜놓자 -->
+    
+    <input type="button" value="목록">
+    <%if(record.writer == writer){%>
+    <input type="file" name="pic">
+    <input type="button" value="수정">
+    <input type="button" value="삭제">
+    <%}%>
+  </form>
+</div>
+<%- include ('../inc/footer')%>
+</body>
+</html>

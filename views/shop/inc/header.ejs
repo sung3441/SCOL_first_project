@@ -1,0 +1,37 @@
+<script>
+    var onoff = true;
+    function changeColor(){
+        if(onoff){ //이미 화이트인 경우
+            document.body.style.backgroundColor = "black";
+            document.getElementById("headeronoff").href="/css/header_black.css";
+            document.getElementById("footeronoff").href="/css/footer_black.css";
+            document.getElementById("onoffImg").src = "/image/shop/scol1.png";
+            onoff = !onoff;
+        }else{
+            document.body.style.backgroundColor = "white";
+            document.getElementById("headeronoff").href="/css/header_white.css";
+            document.getElementById("footeronoff").href="/css/footer_white.css";
+            document.getElementById("onoffImg").src = "/image/shop/scol1.png";
+            onoff = !onoff;
+        }
+    }
+</script>
+
+<div class="topwrap">
+    <div class="topimg">
+        <img src="/image/shop/scol1.png" id="onoffImg">
+    </div>
+
+    <div class="topnavi">
+        <a href="/shop/main"><i class='fas fa-home'></i> Home</a>
+        <a href="/shop/game/list">Game</a>
+        <a href="/shop/product/list">Shop</a>
+        <a href="/shop/community/list">Community</a>
+        <a href="/shop/map">directions</a>
+        <div class="topnavi-right">
+            <a href="/admin/loginform">logout</a>
+            <a onclick="window.open('/shop/product/pay', 'new', 'scrollbars=yes, resizable=no width=430 height=150, left=0, top=0');">point : <%=member.money%></a>
+            <a href="/shop/product/delivery-list?login_id=<%=member.login_id%>">delivery</a>
+        </div>
+    </div>
+</div>

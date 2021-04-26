@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">    
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], textarea,input[type=file] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+textarea{
+  height:100px;
+}
+/*미리보기 이미지*/
+#preview{
+  width:300px;/*너비만 주면 높이면 이미지의 비율을 알아서 잡는다..*/
+
+}
+
+input[type=button] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+
+.container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+/*Jquery의 문법 형식  (누구를).어떻게 , 누구를 자리에 올수있는 요소?
+CSS의 selector가 올수 있다..
+*/    
+$(function(){ //onLoad되면....
+  //편집기 입히기!!
+  CKEDITOR.replace("content");
+
+  $($("input[type='button']")[0]).click(function(){ //등록버튼
+    regist();
+  });
+
+  $($("input[type='button']")[1]).click(function(){ //목록버튼
+    getList();
+  });
+  //이미지 선택시.. 
+  $("input[type='file']").on("change",function(){
+  //preview라는 이미지의 src값을 선택한 값을 변경!!
+
+  //지정된 옵션으로 문자열의 일부를 추철하자
+    var filename=$(this).val().substring($(this).val().lastIndexOf("\\")+1,$(this).val().length);
+    console.log("추출된 파일명은",filename);
+
+    $("#preview").attr("src","http://localhost:9999/images/"+filename);
+  });
+});
+
+function regist(){
+  $("form").attr("action","/shop/community/regist");
+  $("form").attr("method","post"); //post 대형파일 
+  $("form").attr("enctype","multipart/form-data"); //텍스트 아닌 바이너리 형식도 포함되어 있다..
+  //만일 이 속성을 지정하지 않으면, 절대로 바이너리 파일 전송은 불가능하다
+
+  $("form").submit();//전송행위가 발생!!!
+}
+
+function getList(){
+  location.href="/shop/community/list";
+}
+
+</script>
+</head>
+<body>
+
+<h3>Contact Form</h3>
+
+<div class="container">
+  <form>
+    <input type="text" name="title" placeholder="Your title..">
+    <textarea name="content" placeholder="something content...."></textarea>
+    <input type="file" name="pic">
+    <img src="#" alt="" id="preview">
+    <!-- input 태그의 type중 submit은 디폴트로 전송기능이 포함되어 있기 때문에 
+    클릭만으로도, 전송이 발생함 , 따라서 일반 버튼화시켜놓자 -->
+    <input type="button" value="업로드">
+    <input type="button" value="목록">
+  </form>
+</div>
+
+</body>
+</html>

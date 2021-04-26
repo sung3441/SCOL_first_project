@@ -1,0 +1,99 @@
+<%
+var totalRecord=param.record.length; //총 레코드
+var pageSize=10; //한 페이지에 보일 레코드 수
+var totalPage=Math.ceil(totalRecord/pageSize); //정수로 반올림
+var blockSize=10; //한 블럭에 보여질 페이지 수
+var currentPage=param.currentPage; //현재 페이지
+var curPos=(currentPage-1)*pageSize; //페이지당 배열 시작 index
+var num=totalRecord - curPos; //페이지당 시작 번호
+
+var firstPage= currentPage-(currentPage-1)%blockSize;
+var lastPage=firstPage+(blockSize-1);
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 5%;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+  border-bottom: 1px solid #e6e9e6;
+}
+
+/* tr:nth-child(even) {
+  background-color: #f2f2f2;
+} */
+
+.pageNum{
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+
+a{
+  text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+<%- include ("../inc/top_navi")%>
+<h3>Order List</h3>
+
+<table>
+  <tr style="background-image: url('/image/bg2.jpg'); background-size: cover;">
+    <th>No</th>
+    <th>Name</th>
+    <th>Information</th>
+    <th>img</th>
+    <th>Genre</th>
+  </tr>
+  <%for(var i=0; i<pageSize; i++){%>
+    <%if(num<1)break;%>
+    <%var orderList=param.record[curPos++];%>
+  <tr>
+    <td><%=(num--)%></td>
+    <td>
+      <a href="/admin/game/detail?game_id=<%=orderList.game_id%>"><%=orderList.game_name%></a>
+    </td>
+    <td><%=orderList.game_detail%></td>
+    <td>
+      <img src="/upload/game_img/<%=orderList.game_img%>" width="50px" height="50px"/>
+    </td>
+    <td><%=orderList.game_kind%></td>
+  </tr>
+  <%}%>
+  <tr>
+    <td colspan="6" style="text-align: center;">
+      <%if(firstPage-1<1){%>
+        <a href="javascript:alert('이전 페이지가 없습니다');">◀</a>
+      <%}else{%>
+      <a href="/admin/game/list?currentPage=<%=firstPage-1%>">◀</a>
+      <%}%>
+
+      <%for(var i=firstPage; i<=lastPage; i++){%>
+        <%if(i>totalPage)break;%>
+        <a href="/admin/game/list?currentPage=<%=i%>"<%if(i==currentPage){%> class="pageNum"<%}%>>[<%=i%>]</a>
+      <%}%>
+
+      <%if(lastPage+1>totalPage){%>
+        <a href="javascript:alert('다음 페이지가 없습니다');">▶</a>
+        <%}else{%>
+        <a href="/admin/login/list?currentPage=<%=lastPage+1%>">▶</a>
+      <%}%>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

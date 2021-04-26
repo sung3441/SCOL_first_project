@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>로그인 / 회원가입 </title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+.wrap {
+    height: 100%;
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+}
+.form-wrap {
+    width: 380px;
+    height: 480px;
+    position: relative;
+    margin: 6% auto;
+    background: #fff;
+    padding: 5px;
+    overflow: hidden;
+}
+.button-wrap {
+    width: 230px;
+    margin: 35px auto;
+    position: relative;
+    box-shadow: 0 0 600px 9px #fcae8f;
+    border-radius: 30px;
+}
+.togglebtn {
+    padding: 10px 30px;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    outline: none;
+    position: relative;
+}
+#btn {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 110px;
+    height: 100%;
+    background: linear-gradient(to right, #ff105f, #ffad06);
+    border-radius: 30px;
+    transition: .5s;
+}
+.social-icons {
+    margin: 30px auto;
+    text-align: center;
+}
+.social-icons img {
+    width: 30px ;
+    cursor: pointer;
+}
+.input-group {
+    top: 180px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+}
+.input-group1 {
+    top: 130px;
+    position: absolute;
+    width: 280px;
+    transition: .5s;
+}
+.input-field,select {
+    width: 100%;
+    padding: 10px 0;
+    margin: 5px 0;
+    border: none;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+}
+.game_kind{
+    width: 100%;
+}
+.submit {
+    width: 85%;
+    padding: 10px 30px;
+    cursor: pointer;
+    display: block;
+    margin: auto;
+    background: linear-gradient(to right, #ff105f, #ffad06);
+    border: 0;
+    outline: none;
+    border-radius: 30px;
+    margin-top: 50px;
+}
+
+.checkbox {
+    margin: 30px 10px 30px 0;
+}
+span {
+    color: #777;
+    font-size: 12px;
+    bottom: 68px;
+    position: absolute;
+}
+#login {
+    left: 50px;
+}
+#register {
+    left: 450px;
+} 
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  $(function(){//onLoad효과
+    $("#login1").on("click",function(){//로그인
+        loginCheck();
+    })
+    $("#regist1").on("click",function(){//회원가입
+        registerCheck();
+  });
+});
+
+  function registerCheck(){
+    
+    $("#register").attr({
+      action:"/admin/login/regist",
+      method:"post"
+    });
+    $("#register").submit();
+  }
+
+  function loginCheck(){
+    $("#login").attr({
+      action:"/admin/login/login",
+      method:"post"
+    });
+    $("#login").submit();
+  }
+</script>
+</head>
+<body>
+  <div class="wrap" style="background-image: url('/image/bg.jpg');">
+      <div class="form-wrap">
+          <div class="button-wrap">
+              <div id="btn"></div>
+              <button type="button" class="togglebtn" onclick="login()">LOG IN</button>
+              <button type="button" class="togglebtn" onclick="register()">REGISTER</button>
+          </div>
+
+          <form id="login" action="" class="input-group" name="loginForm">
+              <input type="text" class="input-field" placeholder="Enter ID" name="user_id" required>
+              <input type="password" class="input-field" placeholder="Enter Password" name="user_pass" required>
+              <!-- <input type="checkbox" class="checkbox"><span>Remember Password</span> -->
+              <input type="button" id="login1" name="login1" class="submit" value="Login">
+          </form>
+
+          <form id="register" action="" class="input-group1" name="registForm">
+              <input type="text" class="input-field" placeholder="Enter Name" name="user_name" required>
+              <input type="text" class="input-field" placeholder="Enter ID" name="user_id" required>
+              <input type="password" class="input-field" placeholder="Enter Password" name="user_pass" required>
+              <!-- <input type="password" class="input-field" placeholder="Enter Game_Kind" required> -->
+              <select id="game_kind" class="game_kind" name="game_kind" onchange="">
+                <option value="">장르 선택</option>
+                <option value="sports">sports</option>
+                <option value="rpg">rpg</option>
+                <option value="shooting">shooting</option>
+                </select>            
+              <!-- <input type="checkbox" class="checkbox"><span>Terms and conditions</span> -->
+              <input type="button" id="regist1" name="register1" class="submit" value="REGISTER" >
+          </form>
+      </div>
+  </div>
+  <script>
+      var x = document.getElementById("login");
+      var y = document.getElementById("register");
+      var z = document.getElementById("btn");
+      
+      
+      function login(){
+          x.style.left = "50px";
+          y.style.left = "450px";
+          z.style.left = "0";
+      }
+
+      function register(){
+          x.style.left = "-400px";
+          y.style.left = "50px";
+          z.style.left = "110px";
+      }
+</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<%
+    var totalRecord = param.record.length; //총 레코드의 수!!
+    var pageSize = 10; //페이지당 보여질 레코드의 수!!
+    var totalPage = Math.ceil(totalRecord/pageSize); 
+    //총 페이지 수 나머지가 있을 경우 올림해줌
+
+    var blockSize = 10; //블럭 당 보여질 페이지 수
+    var currentPage = param.currentPage;//넘겨받은 페이지 정보; //현재 페이지
+    var firstPage = currentPage-(currentPage-1)%10;
+    var lastPage = firstPage+(blockSize-1);
+    var curPos = (currentPage-1)*pageSize; //페이지당 배열의 시작 인덱스
+    var num = totalRecord - curPos;
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Verdana, sans-serif; margin:0}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #f2f2f2;
+}
+
+th, td {
+  text-align: left;
+  padding: 20px;
+}
+
+tr{
+    border: 3px solid #f2f2f2;
+}
+
+.game-table{
+    width: 100%;
+    float: left;
+    font-size: 25px;
+    /* background-color: #cccccc; */
+}
+
+.wrapper{
+    width: 100%;
+    height: 1600px;
+    overflow: hidden;
+}
+
+select{
+    position: relative;
+    height: 50px;
+    width: 100%;
+    font-size: 30px;
+    padding-left: 30px;
+}
+
+button{
+    font-size: 30px;
+    background-color: white;
+    border: none;
+}
+
+button:hover{
+    color: crimson;
+}
+
+.search-container button:hover {
+  background: #ccc;
+}
+
+.search-container input[type='text']{
+  font-size: 25px;
+}
+
+</style>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+
+<script>
+function searchGame(){
+  location.href = "/shop/game/search-list?game_name="+$("[name=search]").val();
+}
+
+</script>
+</head>
+<body>
+<%- include ('../inc/header')%>
+<div class="wrapper">
+    <div class="game-table">
+        <table>
+            <tr style="background-color: #f2f2f2;">
+            <th>상품 이미지</th>
+            <th>상품명</th>
+            <th>수량</th>
+            <th>배송지 주소</th>
+            <th>주문자 성명</th>
+            <th>배송 상황</th>
+            </tr>
+            <%for(var i = 1; i <= pageSize; i++){%>
+                <%if(num<1)break; //게시물 번호가1보다 작아지면 멈추기%>
+                <%var delivery = param.record[curPos++];%>
+                <tr>
+                    <%(num--)%>
+                    <td><img src="/upload/product_img/<%=delivery.product_img%>" alt="" style="width: 100px; height: 100px;"></td>
+                    <td><%=delivery.product_name%></td>
+                    <td><%=delivery.ea%></td>
+                    <td><%=delivery.addr%></td>
+                    <td><%=member.user_name%></td>
+                    <td>배송 준비 중</td>
+                  </tr>
+            <%}%>
+        </table>
+    </div>
+</div>
+<%- include ('../inc/footer')%>
+</body>
+</html>

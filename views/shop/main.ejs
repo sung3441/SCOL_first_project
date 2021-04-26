@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<title>SCOL입니다</title>
+<style>
+* {box-sizing: border-box}
+body {font-family: Verdana, sans-serif; margin:0}
+.mySlides {display: none;border: 1px black solid;}
+img {vertical-align: middle;}
+
+/* Slideshow container */
+.slideshow-container {
+max-width: 80%;
+height: 850px;
+position: relative;
+margin: auto;
+margin-top: 100px;
+
+}
+
+/* Next & previous buttons */
+.prev, .next {
+cursor: pointer;
+position: absolute;
+top: 40%;
+width: auto;
+padding: 16px;
+margin-top: -22px;
+color: white;
+font-weight: bold;
+font-size: 18px;
+transition: 0.6s ease;
+border-radius: 0 3px 3px 0;
+user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+right: 0;
+border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+font-size: 40px;
+position: absolute;
+width: 100%;
+text-align: center;
+text-decoration: none;
+top: 641px;
+font-weight: bold;
+color: white;
+background-color: black;
+opacity: 0.4;
+height: 60px;
+}
+
+.active{
+background-color: #717171;
+}
+
+/* Fading animation */
+.fade {
+-webkit-animation-name: fade;
+-webkit-animation-duration: 1.5s;
+animation-name: fade;
+animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+from {opacity: .4} 
+to {opacity: 1}
+}
+
+@keyframes fade {
+from {opacity: .4} 
+to {opacity: 1}
+}
+
+/* On smaller screens, decrease text size */
+@media only screen and (max-width: 300px) {
+.prev, .next,.text {font-size: 11px}
+}
+
+.gameImg{
+width: 1200px;
+height: 700px;
+}
+
+.kindlist{
+height: 70px;
+text-align: center;
+font-size:50px;
+
+}
+
+#shop-container{
+position: relative;
+width: 1400px;
+height: 450px;
+position: relative;
+margin: auto;
+margin-top: 120px;
+
+}
+
+.community-containner{
+   width: 90%;
+    height: 700px;
+    margin: auto
+}
+
+
+.hr{
+  font-size: 80px;
+  font-weight: bold;
+  margin-left: 5%;
+  height: 200px;
+  box-sizing: border-box;
+  padding-top: 100px;
+}
+
+.community1{
+  float: left;
+  width: 40%;
+  height: 600px;
+  margin-left: 6%;
+  margin-top: 80px;
+}
+
+.community2{
+  float: left;
+  width: 40%;
+  height: 600px;
+  margin-left: 6%;
+  margin-top: 80px;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 0px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+  border-bottom: 1px solid #444444;
+}
+
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'>
+</script>
+<script>
+var onoff = true;
+$(function(){
+    
+})
+
+//나이트 모드로 바꿔버릴 함수
+function changeColor(){
+    if(onoff){ //이미 화이트인 경우
+        document.body.style.backgroundColor = "black";
+        document.getElementById("headeronoff").href="/css/header_black.css";
+        document.getElementById("footeronoff").href="/css/footer_black.css";
+        document.getElementById("onoffImg").src = "/image/shop/scol1.png";
+        onoff = !onoff;
+    }else{
+        document.body.style.backgroundColor = "white";
+        document.getElementById("headeronoff").href="/css/header_white.css";
+        document.getElementById("footeronoff").href="/css/footer_white.css";
+        document.getElementById("onoffImg").src = "/image/shop/scol2.png";
+        onoff = !onoff;
+    }
+}
+</script>
+
+</head>
+<body>
+    <!-- 상단 네이게이션 + 이미지 시작-->
+<%- include ('./inc/header')%>
+    <!-- 상단 네이게이션 + 이미지 끝 -->
+
+    <!-- 게임 이미지 영역 시작 -->
+  <div class="hr"> game</div>
+  <hr color="black" size="10" width="90%">
+  <div class="slideshow-container">
+    <!-- 메인 화면에 보여질 이미지는 3개 -->
+    <%for(var i = 0; i <= gameList.length-1; i++){%>
+    <div class="mySlides fade">
+      <img src="/upload/game_img/<%=gameList[i].game_img%>" style="width:100%;" class="gameImg">
+      <div class="text"><a href="/shop/game/download?game_id=<%=gameList[i].game_id%>" style="text-decoration: none;"><%=gameList[i].game_name%></a></div>
+    </div>
+    <%}%>
+
+    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+  </div>
+<div class="hr">shop</div>
+<hr color="black" size="10" width="90%">
+<br>
+<!-- 게임 이미지에 대한 이벤트 처리-->
+<script>
+var slideIndex = 1;
+  showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  var i;
+  var slides = document.getElementsByClassName("mySlides");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slides[slideIndex-1].style.display = "block";  
+}
+</script>
+
+    <!-- 게임 이미지 영역 종료 -->
+<!-- 상점 카테고리 영역 -->
+<div id="shop-container">
+<!-- 지우면 안딤!!!!!!!!!! -->
+</div>
+
+<!-- 카테고리를 위한 스크립트 -->
+<script>
+  var wrapper;
+  //텍스트 박스용 이미지
+  var a=0.1;
+  var cardArray=[];
+  var targetY=[];
+  var msg=["키보드", "마우스", "스피커", "헤드셋"];
+  var imgArray=["url(/image/shop/keyboard.png)", "url(/image/shop/mouse.png)","url(/image/shop/speaker.png)", "url(/image/shop/headset.png)"];
+
+  function init(){
+      wrapper=document.getElementById("shop-container");
+      for(var i=0; i<4; i++){
+          targetY[i]=270;
+          cardArray[i]=createCard([i], imgArray[i], msg[i], i+1);
+          wrapper.appendChild(cardArray[i]);
+      }
+  }
+  
+  //카드 한개를 생성하는 함수
+  function createCard(target, img, msg, i){
+      var card=document.createElement("div");//이미지를 배경으로 안고 있는 바깥쪽 카드
+      card.style.width=300+"px";
+      card.style.height=320+"px";
+      card.style.backgroundImage=img;
+      card.style.backgroundSize="cover";
+      card.style.float="left";
+      card.style.overflow="hidden";
+      card.style.position="relative";
+      card.style.marginLeft = 40+"px";
+    
+
+      //텍스트 박스+
+      var textBox=document.createElement("div");
+      textBox.style.width=300+"px";
+      textBox.style.height=320+"px";
+      textBox.style.backgroundColor="rgb(65, 65, 63)";
+      textBox.style.position="absolute";
+      textBox.style.top=270+"px";
+      textBox.innerText=msg;
+      textBox.style.color="white";
+      textBox.style.textAlign="center";
+      textBox.style.fontSize=30+"px";
+      textBox.style.paddingTop=5+"px";
+      textBox.style.boxSizing="border-box";
+      //투명도 조절 0이 투명~1이 불투명
+      textBox.style.opacity=0.7;
+      textBox.addEventListener("click", function(){
+        location.href = "/shop/product/list?topcategory_id="+i;
+
+      });
+      //var index=i;
+      textBox.addEventListener("mouseover", function(){
+          //나중에 텍스트 박스의 인덱스를 결정
+          targetY[target]=0;
+      });
+
+      textBox.addEventListener("mouseout", function(){
+          targetY[target]=270;
+      });
+
+      card.appendChild(textBox);
+      return card;
+  }
+  
+  //부드럽게 오르내리기 감속도 처리 함수
+  function slideUpDown(){
+      //물체위치=현재 물체 위치+  a*(목표위치-현재 물체 위치)
+      for(var i=0; i<cardArray.length; i++ ){
+          var textBox=cardArray[i].children[0];//textBox안쪽이라는 안쪽 div를 지칭
+          textBox.style.top=parseFloat(textBox.style.top)+a*(targetY[i]-parseFloat(textBox.style.top))+"px";
+      }
+  }
+
+  //게속 이미지 움직이게 해야됨
+  window.addEventListener("load", function(){
+      init();
+      setInterval("slideUpDown()", 30);
+  });
+</script>
+
+<div class="hr">community</div>
+<hr color="black" size="10" width="90%">
+<!-- 커뮤니티 미리보기 영역 -->
+<div class="community-containner">
+  <div  class="community-content" style="font-size: 20px;">
+    <div class="community1">
+      <table>
+        <%for(var i = 0; i < communityList.length; i++){%>
+        <%if(i > 3) break%>
+        <%var community = communityList[i]%>
+        <tr onclick="location.href='/shop/community/detail?community_id=<%=community.community_id%>'">
+          <td><%=community.writer%></td>
+          <td><%=community.title%></td>
+          <td><%=lib.getyymmdd(community.regdate)%></td>
+        </tr>
+        <%}%>
+      </table>
+    </div>
+    <div class="community2">
+      <table>
+        <%for(var i = 4; i < communityList.length; i++){%>
+        <%if(i > 7) break%>
+        <%var community = communityList[i]%>
+        <tr onclick="location.href='/shop/community/detail?community_id=<%=community.community_id%>'">
+          <td><%=community.writer%></td>
+          <td><%=community.title%></td>
+          <td><%=lib.getyymmdd(community.regdate)%></td>
+        </tr>
+        <%}%>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 푸터 영역 시작 -->
+<%- include ('./inc/footer')%>
+</body>
+</html>

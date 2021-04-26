@@ -1,0 +1,145 @@
+<%
+    var totalRecord = param.record.length; //총 레코드의 수!!
+    var pageSize = 10; //페이지당 보여질 레코드의 수!!
+    var totalPage = Math.ceil(totalRecord/pageSize); 
+    //총 페이지 수 나머지가 있을 경우 올림해줌
+
+    var blockSize = 10; //블럭 당 보여질 페이지 수
+    var currentPage = param.currentPage;//넘겨받은 페이지 정보; //현재 페이지
+    var firstPage = currentPage-(currentPage-1)%10;
+    var lastPage = firstPage+(blockSize-1);
+    var curPos = (currentPage-1)*pageSize; //페이지당 배열의 시작 인덱스
+    var num = totalRecord - curPos;
+%>
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Verdana, sans-serif; margin:0}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #f2f2f2;
+}
+
+th, td {
+  text-align: left;
+  padding: 20px;
+}
+
+tr{
+    border: 3px solid #f2f2f2;
+}
+
+.community-table{
+    width: 100%;
+    float: left;
+    font-size: 25px;
+    /* background-color: #cccccc; */
+}
+
+.wrapper{
+    width: 100%;
+    height: 1600px;
+    overflow: hidden;
+}
+
+select{
+    font-weight: bold;
+}
+
+button{
+    font-size: 30px;
+    background-color: white;
+    border: none;
+}
+
+button:hover{
+    color: crimson;
+}
+
+.search-container button:hover {
+  background: #ccc;
+}
+
+.search-container input[type='text']{
+  font-size: 25px;
+  width: 900px;
+}
+
+</style>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+
+<script>
+function searchcommunity(){
+  location.href = "/shop/community/search-list?select="+$("#selectbox").val()+"&val="+$("#search").val();
+}
+
+</script>
+</head>
+<body>
+<%if(param.record.length < 1 && param.search){%>
+  <script>
+    alert("검색 되는 게시물이 없습니다.");
+    location.href = "/shop/community/list";
+  </script>
+<%}%>
+<%- include ('../inc/header')%>
+<div class="wrapper">
+    <div class="community-table">
+        <table>
+            <tr style="background-color: #f2f2f2;">
+            <th>
+              <select name="" id="selectbox" style="font-size: 20px; height: 35px; width: 100px; background-color: #f2f2f2; border: 0px;" >
+                <option value="title" selected>제목</option>
+                <option value="writer">작성자</option>
+              </select>
+            </th>
+            <th colspan="3"> 
+              <div class="search-container">
+                <input type="text" placeholder="Search.." id="search" style="border: 0px; background-color: #f2f2f2;">
+                <button type="button" onclick="searchcommunity()" style="background-color: #f2f2f2;"><i class="fa fa-search"></i></button>
+              </div>
+            </th>
+            <th colspan="2">
+              <button onclick="location.href='/shop/community/regist_form'" style="background-color: #f2f2f2;">글 등록</button>
+            </th>
+            </tr>
+            <%for(var i = 1; i <= pageSize; i++){%>
+                <%if(num<1)break; //게시물 번호가1보다 작아지면 멈추기%>
+                <%var community = param.record[curPos++];%>
+                <tr>
+                  <td>
+                      <%=(num--)%>
+                    </td>
+                    <td>
+                      <img src="/upload/community_img/<%=community.community_img%>"width="50px" height="50px" alt="">
+                    </td>
+                    <td><a href='/shop/community/detail?community_id=<%=community.community_id%>' style="text-decoration: none;"><%=community.title%></a></td>
+                    <td><%=community.writer%></td>
+                    <td><%=param.lib.getyymmdd(community.regdate)%></td>
+                    <td><%=community.hit%></td>
+                  </tr>
+            <%}%>
+            <tr>
+            <td colspan="5" style="text-align: center;">
+                <a href="/admin/product/list">◀</a>
+                <%for(var i = firstPage; i <= lastPage; i++){%>
+                    <%if(i>totalPage)break%>
+                    <a href="/shop/community/list?currentPage=<%=i%>">[<%=i%>]</a>
+                <%}%> 
+                <a href="/shop/community/list">▶</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<%- include ('../inc/footer')%>
+</body>
+</html>

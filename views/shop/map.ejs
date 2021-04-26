@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/css/header_white.css" id="headeronoff">
+<link rel="stylesheet" href="/css/footer_white.css" id="footeronoff">
+<style>
+#wrapper{
+    width: 100%;
+    height: 850px;
+    margin: auto;
+
+}
+
+#search-area{
+    width: 100%;
+    height: 50px;
+    background: #f2f2f2;
+    text-align: center;
+    box-sizing: border-box;
+    font-size: 35px;
+    color: black;
+    font-weight: bold;
+}
+
+
+#content{
+    width: 100%;
+    height: 800px;
+    background: royalblue;
+
+}
+
+select{
+    background: #f2f2f2;
+    margin-left: 15px;
+    font-size: 25px;
+    border: none;
+
+}
+
+body {font-family: Verdana, sans-serif; margin:0}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+</script>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+<script>
+var myCenter;
+var googleMap;
+var content;
+var mapProp;
+var markerAr = [];
+var storeList = {
+    "stores" : [
+        {
+            "name" :  "구리",
+            "index" : 1,
+            "lat" : 37.60196808370248,
+            "lng" : 127.14199205394357
+        },
+        {
+            "name" : "인천",
+            "index" : 2,
+            "lat" : 37.45439866361932,
+            "lng" : 126.70121927578725
+        },
+        {
+            "name" : "죽전",
+            "index" : 3,
+            "lat" : 37.325445975636136,
+            "lng" : 127.10779891160963
+        },
+        {
+            "name" : "포천",
+            "index" : 4,
+            "lat" : 37.829675682845725,
+            "lng" : 127.1498059116976
+        }
+    ]
+};
+function init(){
+    content = document.getElementById("content");
+    myCenter  = new google.maps.LatLng(37.829675682845725 , 127.1498059116976);
+
+    //맵에 중심점에 대한 좌표 및 줌 확대 비율
+    mapProp = {
+        "center" : myCenter,
+        "zoom" : 9
+    };
+    googleMap = new google.maps.Map(content, mapProp);
+    createMarker();
+}
+
+function createMarker(){
+    for(path in storeList.stores){
+        var store = storeList.stores[path]
+        var center = new google.maps.LatLng(store.lat, store.lng);
+        var marker = new google.maps.Marker({
+            "position" : center,
+            "path" : store,
+            "index" : path
+        });
+        markerAr.push(marker);
+        marker.setMap(googleMap);
+        google.maps.event.addListener(marker,'click',function(){
+            googleMap.setZoom(15);
+            //카메라의 중심점을 현재 마커로 이동
+            googleMap.setCenter(markerAr[this.index].getPosition());
+            var tag = "<div style=\"text-align: center; font-size: 30px\">CGV "+this.path.name+"점</div>";
+            
+            var infowindow = new google.maps.InfoWindow({
+                content: tag
+            });
+            infowindow.open(googleMap, markerAr[this.index]);    
+        });
+    }
+}              
+
+//검색 버튼
+function searchStore(index){
+    for(var i = 0; i < storeList.stores.length; i++){
+        if(index == storeList.stores[i].index){
+            googleMap.setZoom(15);
+            googleMap.setCenter(markerAr[i].getPosition());
+            googleMap.setCenter(markerAr[i].getPosition());
+            var tag = "<div style=\"text-align: center; font-size: 30px\">"+storeList.stores[i].name+"점</div>";
+
+            var infowindow = new google.maps.InfoWindow({
+                content: tag
+            });
+            infowindow.open(googleMap, markerAr[i]);
+        }
+    }
+    document.getElementById("search-navi").value = "";
+}
+</script>
+</head>
+<body>
+    <%- include ('./inc/header')%>
+    <div id="wrapper">
+        <div id="search-area">
+            오프라인 매장 찾아오시는 길
+            <select name="" id="" onchange="searchStore(this.value)">
+                <option value="0">store</option>
+                <option value="1">구리점</option>
+                <option value="2">인천점</option>
+                <option value="3">죽전점</option>
+                <option value="4">포천점</option>
+            </select>
+        </div>
+        <div id="content"></div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD5TAmy09qagdM9HNFD-MsgvivYgn9tZPU&callback=init"></script>
+    <%- include ('./inc/footer')%>
+</body>
+</html>

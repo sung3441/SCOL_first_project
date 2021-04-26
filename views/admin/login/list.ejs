@@ -1,0 +1,136 @@
+<%
+    var totalRecord=param.record.length;//총 게시물 수
+    var pageSize=10; //한 페이지에 보여줄 게시글 수
+    var blockSize=10; //한 페이지의 페이지 블럭 개수
+    var totalPage=Math.ceil(totalRecord/pageSize); //게시글 수에 맞는 페이지 블럭 개수 
+    var currentPage=parseInt(param.currentPage1);//현재 페이지
+    var curPos=(currentPage-1)*pageSize; //몇번째 제이슨을 사용할지 결정(게시글 하나의 정보)
+    var num=totalRecord-curPos; // 게시글 번호
+
+    var firstPage= currentPage-(currentPage-1)%blockSize;
+    var lastPage=firstPage+(blockSize-1);
+%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/admin_topnavi.css">
+<style>
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th, td {
+  text-align: left;
+  padding: 16px;
+  border-bottom: 1px solid #efefef;
+}
+
+/* tr:nth-child(even) {
+  background-color: #f2f2f2;
+} */
+.pageNum{
+    font-size: 20px;
+    font-weight: bold;
+    color: blue;
+}
+input[type=button] {
+  background-color: #b1ddab;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=button]:hover {
+  background-color: #45a049;
+}
+a{
+  text-decoration: none;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(function(){
+  $("input[type='button']").on("click",function(){
+    if(confirm("삭제하시겠습니까?")){
+      console.log("삭제시점");
+      $("#check").attr({
+          action:"/admin/login/del",
+          method:"post"
+        })
+      $("#check").submit();
+    }
+  })
+})
+function doOpenCheck(chk){
+    var obj = document.getElementsByName("user_Id");
+    for(var i=0; i<obj.length; i++){
+        if(obj[i] != chk){
+            obj[i].checked = false;
+        }
+    }
+}
+
+
+
+</script>
+</head>
+<body>
+<%- include ('../inc/top_navi')%>
+<h3>User List</h3>
+
+<table>
+  <tr style="background-color: #b1ddab;">
+    <th>Del</th>
+    <th>No</th>
+    <th>ID</th>
+    <th>PASS</th>
+    <th>NAME</th>
+    <th>GAME KIND</th>
+  </tr>
+  <form  id="check">
+    <%for(var i=1; i<=pageSize; i++){%>
+        <%if(num<1)break;%>
+        <%var user=param.record[curPos++];%>
+
+        <tr>
+          <td><input type="checkbox" value="<%=user.user_id%>" name="user_id" onclick="doOpenCheck(this)"></td>
+          <td><%=(num--)%></td>
+          <td><%=user.user_id%></td>
+          <td><%=user.user_pass%></td>
+          <td><%=user.user_name%></td>
+          <td><%=user.game_kind%></td>
+        </tr>
+        <%}%>
+        <tr>
+  </form>
+
+    <td colspan="6" style="text-align: center;">
+        <%if(firstPage-1<1){ //lastPage+1한 결과가 보유한 총 페이지를 넘어서면 욕!%>
+            <a href="javascript:alert('이전 페이지가 없습니다');">◀</a>
+            <%}else{%>
+            <a href="/admin/login/list?currentPage=<%=firstPage-1%>">◀</a>
+        <%}%>
+
+        <%for(var i=firstPage; i<=lastPage; i++){%>
+            <%if(i>totalPage)break;%>
+            <a href="/admin/login/list?currentPage=<%=i%>"<%if(i==currentPage){%> class="pageNum"<%}%>>[<%=i%>]</a>
+        <%}%>
+
+        <%if(lastPage+1>totalPage){ //lastPage+1한 결과가 보유한 총 페이지를 넘어서면 욕!%>
+            <a href="javascript:alert('다음 페이지가 없습니다');">▶</a>
+            <%}else{%>
+            <a href="/admin/login/list?currentPage=<%=lastPage+1%>">▶</a>
+        <%}%>    
+    </td>
+  </tr>
+</table>
+<input type="button" value="회원 삭제" >
+</body>
+</html>
