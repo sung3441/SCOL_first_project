@@ -1,0 +1,48 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.topwrap{
+    position: relative;
+    width: 100%;
+}
+
+.topnavi {
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+}
+
+.topnavi a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnavi a:hover {
+    background-color: white;
+    color: black;
+    
+}
+
+.topnavi-right a{
+    float: right;
+    font-size: 17px;
+    padding-right: 20px;
+} 
+
+.topimg{
+    text-align: center;
+    position: relative;
+    background-color:#333;
+    height: 185px;
+
+}
+
+.topimg img{
+    width: 300px;
+}
